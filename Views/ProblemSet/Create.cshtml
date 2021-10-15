@@ -1,0 +1,227 @@
+@model ProblemSets.Models.ProblemSet
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<script type="text/javascript">
+(function($){
+  $(function(){
+	
+	$('.chipsss').material_chip();
+    
+        
+	$('.chips-placeholder').material_chip({
+	  placeholder: 'Enter a tag',
+	  secondaryPlaceholder: '+Tag',
+	  
+	  
+	});
+	
+	
+    $('.chips-initial').material_chip({
+        placeholder: 'Enter answers',
+        secondaryPlaceholder: '+Answer',
+      });
+
+    
+    
+	$(".dropdown-trigger").dropdown();
+    
+    
+      $('.chips-initial').on('chip.add', function(e, chip){
+          alert(chip.tag)
+          console.log(chip)
+         
+          pushAnswers(chip.tag)
+          
+        // you have the added chip here
+      });
+    
+      $('.chips-initial').on('chip.delete', function(e, chip){
+       alert("pek")
+       console.log(chip)
+        dropAnswers(chip.tag)
+      });
+      
+       $('.chips-placeholder').on('chip.add', function(e, chip){
+                
+                 pushChips(chip.tag)
+            });
+            $('.chips-placeholder').on('chip.delete', function(e, chip){
+             
+             dropChips(chip.tag)
+             
+            });
+    
+      $('.chips').on('chip.select', function(e, chip){
+        alert("end")
+      });
+      
+      
+      
+   
+
+  }); 
+})(jQuery);
+</script>
+
+<script>
+var tag=[]
+var answers=[]
+function pushChips(chip){
+tag.push(chip)
+console.log(tag)}
+
+function dropChips(chip){
+var pos=tag.indexOf(chip)
+if (pos > -1) {
+  tag.splice(pos, 1);
+}
+console.log(tag)}
+
+function pushAnswers(chip){
+answers.push(chip)
+console.log(answers)}
+
+function dropAnswers(chip){
+var pos=answers.indexOf(chip)
+if (pos > -1) {
+  answers.splice(pos, 1);
+}
+console.log(answers)}
+
+function getChips(){  
+      document.getElementById('myField').value=tag;}  
+function getAnswers(){
+    document.getElementById('myAnswers').value=answers;}  
+
+
+</script>
+
+@*/////////////
+/////////////*@
+
+<link href="~/Dropzone/css/basic.css" rel="stylesheet" />
+<link href="~/Dropzone/css/dropzone.css" rel="stylesheet" />
+<script src="~/Dropzone/dropzone.min.js"></script>
+<script type="text/javascript">
+        Dropzone.options.myDropzone= {
+            url: "/ProblemSet/UploadFile",
+            autoProcessQueue: false,
+            uploadMultiple: true,
+            parallelUploads: 100,
+            maxFiles: 100,
+            maxFilesize: 1,
+            acceptedFiles: 'image/*',
+            addRemoveLinks: true,
+            init: function() {
+               
+                
+                dzClosure = this; // Makes sure that 'this' is understood inside the functions below.
+        
+                // for Dropzone to process the queue (instead of default form behavior):
+                document.getElementById("submit-all").addEventListener("click", function(e) {
+                    // Make sure that the form isn't actually being sent.
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dzClosure.processQueue();
+                    
+                    
+                });
+        
+                //send all the form data along with the files:
+                this.on("sendingmultiple", function(data, xhr, formData) {
+                    
+                    formData.append("ProblemQuestion", jQuery("#ProblemQuestion").val());
+                    formData.append("Name", jQuery("#Name").val());
+                    formData.append("Theme", jQuery("#Theme").val());
+                    tag.forEach(elem => formData.append("ProblemTag", elem))
+                    answers.forEach(elem => formData.append("ProblemAnswer", elem))
+                   
+
+                });  
+                
+                
+            }
+        }
+</script>
+
+
+
+<script>
+function load() {   
+   
+    setTimeout(() => { window.location.replace("/ProblemSet");  }, 1000);
+} 
+</script>
+
+<h1>Create</h1>
+
+<h4>Problem</h4>
+<hr />
+@*<style>
+    label {
+        color: rgba(55,87,222,0.92);
+        font-weight: bold;
+    }   
+  
+</style>*@
+<style>
+.hiddendiv{
+  display: none
+}
+</style>
+<div class="row">
+    <div class="col-md-4">
+        @*<form asp-action="Create">*@
+@using (Html.BeginForm("UploadFile", "ProblemSet", FormMethod.Post, new { enctype = "multipart/form-data" }))  
+            {
+               
+                <div class="form-group">
+                    <label class="control-label">Name</label>
+                    <input asp-for="Name" class="form-control"/>
+                    </div><br>
+                <div class="form-group">
+                    <label asp-for="Theme">Theme &#160</label>
+                    <select asp-for="Theme" asp-items="ViewBag.Topics"></select>
+                </div><br>
+                
+                <label class="control-label">Tags</label>
+                <div class="chips chips-placeholder">
+                    <div class="chip">
+                        <i class="material-icons close">close</i>
+                    </div>
+                </div><br>
+
+                <div class="form-group">
+                    <label class="control-label">Problem Question</label><br />
+                    <textarea asp-for="ProblemQuestion" cols="40" class="materialize-textarea"></textarea>
+                </div><br>
+            <div class="form-group">
+                <label class="control-label">Problem Answers</label>
+                <div class="chips chips-initial">
+                    <div class="chip">
+                        <i class="close material-icons"></i>
+                    </div>
+                </div>
+            </div><br>
+            <div class="dropzone" id="myDropzone"></div><br>
+                <div class="form-group">
+                    <input type="hidden" id="myField" name="tags" value=""/>
+                    <input type="hidden" id="myAnswers" name="answers" value=""/>
+                    <input type="submit" id="submit-all" value="Create" class="btn btn-primary" onClick="load()"@*'window.location.replace("/ProblemSet)'*@/>
+                </div><br>
+            }
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to Problems</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

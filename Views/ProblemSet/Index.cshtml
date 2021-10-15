@@ -1,0 +1,53 @@
+@using System.Globalization
+@model IEnumerable<ProblemSets.Models.ProblemSet>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = "Index";
+}
+ <link rel="stylesheet" href="~/css/kek.css"/>
+
+<h1>@Localizer["MyProfile"]</h1>
+<h4>@Localizer["NumberCreatedProblems"] @ViewBag.ProblemCreated </h4>
+<h4>@Localizer["NumberSolvedProblems"] @ViewBag.ProblemSolved</h4>
+<p>
+    <a asp-action="Create">@Localizer["Create"]</a>
+</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @*<a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Name)</a>*@
+            @Html.ActionLink(Localizer["Name"].Value, "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            @Html.ActionLink(Localizer["CreationTime"].Value, "Index", new { sortOrder = ViewBag.TimeSortParm })
+        </th>
+        <th>
+             @Html.ActionLink(Localizer["Topic"].Value, "Index", new { sortOrder = ViewBag.TopicSortParm })
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Theme)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["Edit"]</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">@Localizer["View"]</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["Delete"]</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

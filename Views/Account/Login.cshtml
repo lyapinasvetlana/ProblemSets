@@ -1,0 +1,10 @@
+@model Login
+<form asp-action="Login" method="post">
+    <input type="hidden" asp-for="ReturnUrl" />
+    <a class="btn btn-info" asp-action="GoogleLogin">Log In With Google</a>
+</form>
+
+<form asp-action="Login" method="post">
+    <input type="hidden" asp-for="ReturnUrl" />
+    <a class="btn btn-info" asp-action="GitHubLogin">Log In With GitHub</a>
+</form>

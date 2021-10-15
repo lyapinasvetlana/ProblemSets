@@ -1,0 +1,44 @@
+@model IEnumerable<ProblemSets.Models.ProblemSet>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "Index";
+}
+<link rel="stylesheet" href="~/css/kek.css"/>
+
+<h1>@Localizer["SearchResult"]</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.ActionLink(Localizer["Name"].Value, "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            @Html.ActionLink(Localizer["CreationTime"].Value, "Index", new { sortOrder = ViewBag.TimeSortParm })
+        </th>
+        <th>
+            @Html.ActionLink(Localizer["Topic"].Value, "Index", new { sortOrder = ViewBag.TopicSortParm })
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Theme)
+            </td>
+            <td>
+                <a asp-action="Details" asp-controller="ProblemSet" asp-route-id="@item.Id">@Localizer["View"]</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

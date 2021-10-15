@@ -5,4 +5,14 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="AspNet.Security.OAuth.GitHub" Version="5.0.16" />
+      <PackageReference Include="AWSSDK.Core" Version="3.7.3.22" />
+      <PackageReference Include="AWSSDK.S3" Version="3.7.3.15" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="5.0.11" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.11" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
+    </ItemGroup>
+
 </Project>
