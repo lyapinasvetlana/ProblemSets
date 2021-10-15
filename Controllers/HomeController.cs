@@ -84,6 +84,7 @@ namespace ProblemSets.Controllers
         }
         public async Task<IActionResult> SetTheme(string theme, string path)
         {
+            
             CookieOptions cookies = new CookieOptions();
             cookies.Expires = DateTimeOffset.UtcNow.AddYears(1);
             if (theme != null) Response.Cookies.Append("theme", theme, cookies);
@@ -97,11 +98,16 @@ namespace ProblemSets.Controllers
             Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+                new CookieOptions {
+                    Expires = DateTimeOffset.UtcNow.AddYears(1),
+                    IsEssential = true
+                }
             );
  
             return LocalRedirect(returnUrl);
         }
+        
+        
 
     }
 }

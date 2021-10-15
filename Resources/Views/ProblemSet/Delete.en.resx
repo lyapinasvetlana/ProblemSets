@@ -18,22 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="Name" xml:space="preserve">
-        <value />
+    <data name="Delete" xml:space="preserve">
+        <value>Delete</value>
     </data>
-    <data name="Tags" xml:space="preserve">
-        <value />
+    <data name="Sure" xml:space="preserve">
+        <value>Are you sure you want to delete this?</value>
+    </data>
+    <data name="Back" xml:space="preserve">
+        <value>Back To Problems</value>
     </data>
     <data name="Topic" xml:space="preserve">
-        <value />
+        <value>Topic</value>
     </data>
-    <data name="LastProblems" xml:space="preserve">
-        <value />
+    <data name="Tags" xml:space="preserve">
+        <value>Tags</value>
     </data>
-    <data name="HighlyRated" xml:space="preserve">
-        <value />
-    </data>
-    <data name="View" xml:space="preserve">
-        <value />
+    <data name="Quest" xml:space="preserve">
+        <value>Problem Question</value>
     </data>
 </root>

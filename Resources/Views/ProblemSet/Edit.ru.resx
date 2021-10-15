@@ -18,19 +18,37 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="SearchResult" xml:space="preserve">
-        <value />
-    </data>
     <data name="Name" xml:space="preserve">
-        <value />
+        <value>Название</value>
     </data>
     <data name="Topic" xml:space="preserve">
-        <value />
+        <value>Тема</value>
     </data>
-    <data name="CreationTime" xml:space="preserve">
-        <value />
+    <data name="Tags" xml:space="preserve">
+        <value>Тэги</value>
     </data>
-    <data name="View" xml:space="preserve">
-        <value />
+    <data name="Enter a tag" xml:space="preserve">
+        <value>Введите тэг</value>
+    </data>
+    <data name="Enter Answer" xml:space="preserve">
+        <value>Введите ответ</value>
+    </data>
+    <data name="Question" xml:space="preserve">
+        <value>Вопрос</value>
+    </data>
+    <data name="Answer" xml:space="preserve">
+        <value>Ответ</value>
+    </data>
+    <data name="Save" xml:space="preserve">
+        <value>Cохранить</value>
+    </data>
+    <data name="Back" xml:space="preserve">
+        <value>Вернутся к задачам</value>
+    </data>
+    <data name="Problem" xml:space="preserve">
+        <value>Задача</value>
+    </data>
+    <data name="Edit" xml:space="preserve">
+        <value>Редактировать</value>
     </data>
 </root>

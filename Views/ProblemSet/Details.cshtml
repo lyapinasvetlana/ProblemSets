@@ -2,14 +2,15 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<AppUser> signInManager
 @inject UserManager<AppUser> userManager
-
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "View Mode";
 }
 
 
 
-<h1>Problem</h1>
+<h1>@Localizer["Problem"]</h1>
 <div>
     <h4>@Model.Name @if (Model.AverageRate == null)
                     {
@@ -41,19 +42,19 @@
                 <input type="radio" id="star1" name="rate" value="1"/>
                 <label for="star1" @*title="text"*@>1 star</label>
             </div>
-            <input type="submit" value="Rate" class="btn btn-danger"/>
+            <input type="submit" value="@Localizer["Rate"]" class="btn btn-danger"/>
         </form>
     }
     
     <br><dl class="row">
         <dt class="col-sm-2">
-            <label class="control-label">Topic</label>
+            <label class="control-label">@Localizer["Topic"]</label>
         </dt>
         <dd class = "col-sm-10">
             <label class="control-label">@Model.Theme</label>
         </dd>
         <dt class="col-sm-2">
-            <label class="control-label">Tags</label>
+            <label class="control-label">@Localizer["Tags"]</label>
         </dt>
         <dd class = "col-sm-10">
             @foreach (var item in Model.ProblemTag)
@@ -62,7 +63,7 @@
             }
         </dd>
         <dt class="col-sm-2">
-            <label class="control-label">Problem Question</label></dt>
+            <label class="control-label">@Localizer["Question"]</label></dt>
         <dd class="col-sm-10">
         <span style="white-space: pre-line">@Model.ProblemQuestion</span>
         </dd>
@@ -79,22 +80,22 @@
 <br>
 @if (TempData.ContainsKey("Has Solution"))
 {
-    <div class ="alert alert-success" role="alert">@TempData["Has Solution"]</div>
+    <div class ="alert alert-success" role="alert">@Localizer["Has Solution"]@TempData["Has Solution"]</div>
 }
 else
 {
     <form asp-action="SendSolution" asp-route-id="@Model.Id">
         <div class="form-group">
-            <label asp-for="ProblemAnswer" class="control-label"></label>
+            <label class="control-label">@Localizer["Answer"]</label>
             <input type="text" name="ProblemAnswer" class="form-control"/>
         </div>
-        <br><input type="submit" value="Send Solution" class="btn btn-danger"/>
+        <br><input type="submit" value="@Localizer["Send"]" class="btn btn-danger"/>
     </form>
     <br>
 @if (signInManager.IsSignedIn(User))
     {
         <div>
-            <a asp-action="Index">Back to My Problemssss</a>
+            <a asp-action="Index">@Localizer["Back"]</a>
         </div><br>
         
 }
@@ -102,11 +103,11 @@ else
 
 if (TempData.ContainsKey("Bad Alert"))
 {
-    <div class ="alert alert-danger" role="alert">@TempData["Bad Alert"]</div>
+    <div class ="alert alert-danger" role="alert">@Localizer["Wrong"]</div>
 }
 if (TempData.ContainsKey("Good Alert"))
 {
-    <div class ="alert alert-success" role="alert">@TempData["Good Alert"]</div>
+    <div class ="alert alert-success" role="alert">@Localizer["Correct"]</div>
 }
 }
 

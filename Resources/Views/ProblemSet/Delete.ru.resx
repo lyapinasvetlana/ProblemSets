@@ -18,34 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="MyProfile" xml:space="preserve">
-        <value />
+    <data name="Delete" xml:space="preserve">
+        <value>Удалить</value>
     </data>
-    <data name="NumberCreatedProblems" xml:space="preserve">
-        <value />
+    <data name="Sure" xml:space="preserve">
+        <value>Вы уверены что хоиите удлаить задачу?</value>
     </data>
-    <data name="NumberSolvedProblems" xml:space="preserve">
-        <value />
+    <data name="Back" xml:space="preserve">
+        <value>Вернуться к задачам</value>
     </data>
-    <data name="Create" xml:space="preserve">
-        <value />
-    </data>
-    <data name="Name" xml:space="preserve">
-        <value />
-    </data>
-    <data name="CreationTime" xml:space="preserve">
-        <value />
+    <data name="Tags" xml:space="preserve">
+        <value>Тэги</value>
     </data>
     <data name="Topic" xml:space="preserve">
-        <value />
+        <value>Тема</value>
     </data>
-    <data name="Edit" xml:space="preserve">
-        <value />
-    </data>
-    <data name="Delete" xml:space="preserve">
-        <value />
-    </data>
-    <data name="View" xml:space="preserve">
-        <value />
+    <data name="Quest" xml:space="preserve">
+        <value>Вопрос</value>
     </data>
 </root>

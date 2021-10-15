@@ -73,17 +73,20 @@
                         </li>
                     }
                     <partial name="_LoginPartial"/>
+                     
                 </ul>
 
 
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                     @using (Html.BeginForm("ShowSearchResults", "Home", FormMethod.Post))
                     {
-                        <div class="search-bar">
-
-                            <input type="text" placeholder="&#128270 &#32 @Localizer["Search"]" name="SearchPhrase" id="SearchPhrase" style="color:#297258"/>
-                        </div>
+                        
+                            <input class="form-control me-sm-2" type="text" placeholder="&#128270 &#32 @Localizer["Search"]" name="SearchPhrase" id="SearchPhrase"/>
+                       
                     }
+                    <div style="margin-left: 20px;">
+                         <div> @await Html.PartialAsync("_SelectLanguagePartial")</div>
+                     </div>
 
                     @using (Html.BeginForm("SetTheme", "Home", FormMethod.Post))
                     {
@@ -100,16 +103,19 @@
                             <div class="form-check form-switch" style="margin-left: 40px;">
                                 <label class="form-check-label" for="flexSwitchCheckDefault">&#9788</label>
                                 <input value="on" name="theme" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onChange="this.form.submit()">
-                                 <input type="hidden" value="@_httpContextAccessor.HttpContext.Request.Path" name="path">
+                                <input type="hidden" value="@_httpContextAccessor.HttpContext.Request.Path" name="path">
                             </div>
+                            
+                            
                         }
 
-
                     }
-                   
+                    
                 </div>
+                
             </div>
         </div>
+       
     </nav>
 </header>
 <div class="container">

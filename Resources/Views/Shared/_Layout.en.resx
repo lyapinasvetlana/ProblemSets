@@ -39,4 +39,7 @@
     <data name="Search" xml:space="preserve">
         <value>Search...</value>
     </data>
+    <data name="Language" xml:space="preserve">
+        <value>Language</value>
+    </data>
 </root>

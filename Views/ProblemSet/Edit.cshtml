@@ -1,6 +1,8 @@
 @using Microsoft.EntityFrameworkCore
 @using Amazon.S3.Model
 @model ProblemSets.Models.ProblemSet
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
     ViewData["Title"] = "Edit";
@@ -37,8 +39,8 @@ for(var i = 0; i < array.length; i++) {
         
 	$('.chips-placeholder').material_chip({
 	  data: tagsMeta,
-	  placeholder: 'Enter a tag',
-	  secondaryPlaceholder: '+Tag',
+	  placeholder: '@Localizer["Enter a tag"]',
+	  secondaryPlaceholder: '@Localizer["Enter a tag"]',
 	  
 	  
 	});
@@ -46,6 +48,9 @@ for(var i = 0; i < array.length; i++) {
 	
     $('.chips-initial').material_chip({
        data: answersMeta,
+       placeholder: '@Localizer["Enter Answer"]',
+       secondaryPlaceholder: '@Localizer["Enter Answer"]',
+       
       });
 
     
@@ -169,63 +174,17 @@ function getAnswers(){
                     formData.append("Id", jQuery("#Id").val());
                     tag.forEach(elem => formData.append("ProblemTag", elem))
                     answers.forEach(elem => formData.append("ProblemAnswer", elem))
-                    //window.location.replace("/ProblemSet/UploadFile");
+                    
                 });  
                 
-                
-            
-                //myDropzone.options.thumbnail.call(myDropzone, mockFile, "https://ktonanovenkogo.ru/image/finik.jpg");
+               
             }
         }
         
-        /*var jScriptArray2=[];
-        Dropzone.options.imageDropzone = {
-            paramName: 'NewImages',
-            autoProcessQueue: false,
-            uploadMultiple: true,
-            parallelUploads: 100,
-            maxFiles: 100,
-            init: function () {
-                var myDropzone = this;
-        
-                //Populate any existing thumbnails
-                if (jScriptArray2) {
-                    for (var i = 0; i < jScriptArray2.length; i++) {
-                        var mockFile = { 
-                            name: "myimage.jpg", 
-                            size: 12345, 
-                            type: 'image/jpeg', 
-                            status: Dropzone.ADDED, 
-                            url: jScriptArray2[i] 
-                        };
-        
-                        // Call the default addedfile event handler
-                        myDropzone.emit("addedfile", mockFile);
-        
-                        // And optionally show the thumbnail of the file:
-                        myDropzone.emit("thumbnail", mockFile, thumbnailUrls[i]);
-        
-                        myDropzone.files.push(mockFile);
-                    }
-                }
-        
-                this.on("removedfile", function (file) {
-                    // Only files that have been programmatically added should
-                    // have a url property.
-                    if (file.url && file.url.trim().length > 0) {
-                        $("<input type='hidden'>").attr({
-                            id: 'DeletedImageUrls',
-                            name: 'DeletedImageUrls'
-                        }).val(file.url).appendTo('#image-form');
-                    }
-                });
-            }
-        };*/
+      
        
 </script>
 
-@*///////////////
-/////////////*@
 <script>
 function load() {    
 setTimeout(() => { window.location.replace("/ProblemSet");  }, 1000);
@@ -233,36 +192,36 @@ setTimeout(() => { window.location.replace("/ProblemSet");  }, 1000);
 </script>
 
 
-<h1>Edit</h1>
+<h1>@Localizer["Edit"]</h1>
 
-<h4>Problem</h4>
+<h4>@Localizer["Problem"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         @using (Html.BeginForm("Edit", "ProblemSet", FormMethod.Post, new { enctype = "multipart/form-data" }))  { 
             <input type="hidden" asp-for="Id" />        
             <div class="form-group">
-                <label class="control-label">Name</label>
+                <label class="control-label">@Localizer["Name"]</label>
                 <input asp-for="Name" class="form-control"/>
             </div><br>
             <div class="form-group">
-                <label asp-for="Theme">Topic &#160</label>
+                <label asp-for="Theme">@Localizer["Topic"] &#160</label>
                 <select asp-for="Theme" asp-items="ViewBag.Topics"></select>
             </div><br>
             
-            <label class="control-label">Tags</label>
+            <label class="control-label">@Localizer["Tags"]</label>
             <div class="chips chips-placeholder">
                 <div class="chip"><i class="close material-icons">close</i></div>
             </div><br>
             
             <div class="form-group">
-                <label class="control-label">Problem Question</label><br />
+                <label class="control-label">@Localizer["Question"]</label><br />
                     
                 <textarea  asp-for="ProblemQuestion" cols="40"  class="materialize-textarea"></textarea>
             </div><br>
             
             <div class="form-group">
-                <label class="control-label">Problem Answers</label>
+                <label class="control-label">@Localizer["Answer"]</label>
                 <div class="chips chips-initial">
                     <div class="chip"><i class="close material-icons">close</i></div>
                 </div>
@@ -286,13 +245,13 @@ setTimeout(() => { window.location.replace("/ProblemSet");  }, 1000);
             <div class="form-group">
                 <input type="hidden" id="myField" name="tags" value=""/>
                 <input type="hidden" id="myAnswers" name="answers" value=""/>
-                <input type="submit" id="submit-all" value="Save" class="btn btn-primary" onClick="load()"/>
+                <input type="submit" id="submit-all" value="@Localizer["Save"]" class="btn btn-primary" onClick="load()"/>
             </div><br>
         }
     </div>
 </div>
 <div>
-    <a asp-action="Index">Back to Problems</a>
+    <a asp-action="Index">@Localizer["Back"]</a>
 </div>
 
 @section Scripts {

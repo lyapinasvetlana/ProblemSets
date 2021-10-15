@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Identity;
 /*using WebAppEnd.IdentityPolicy;*/
 using System;
 using System.Globalization;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
 using ProblemSets.ConfigDataBase;
 using ProblemSets.Models;
 /*using Microsoft.AspNetCore.Authorization;
@@ -43,9 +45,6 @@ namespace ProblemSets
                 opts.Password.RequireLowercase = false;
                 opts.Password.RequireUppercase = true;
                 opts.Password.RequireDigit = true;
-
-                //opts.SignIn.RequireConfirmedEmail = true;
-
                 opts.Lockout.AllowedForNewUsers = true;
                 opts.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
                 opts.Lockout.MaxFailedAccessAttempts = 3;
@@ -72,7 +71,20 @@ namespace ProblemSets
                 options.ClientSecret = Environment.GetEnvironmentVariable("SECRETGITHUB");
                 options.SignInScheme = IdentityConstants.ExternalScheme;
             });
-            services.AddControllersWithViews().AddDataAnnotationsLocalization() // добавляем локализацию аннотаций;
+            
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("ru"),
+                };
+                options.DefaultRequestCulture = new RequestCulture(culture: "en", uiCulture: "ru");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+            
+            services.AddControllersWithViews().AddDataAnnotationsLocalization() 
                 .AddViewLocalization();
             
             services.AddHttpContextAccessor();
@@ -80,18 +92,15 @@ namespace ProblemSets
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            var supportedCultures = new[]
-            {
-                new CultureInfo("en"),
-                new CultureInfo("ru")
-            };
             
-            app.UseRequestLocalization(new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture("ru"),
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
-            });
+            var supportedCultures = new string[] { "en", "ru" };
+           
+            app.UseRequestLocalization(options =>
+                options
+                    .AddSupportedCultures(supportedCultures)
+                    .AddSupportedUICultures(supportedCultures)
+                    
+            );
             
             if (env.IsDevelopment())
             {

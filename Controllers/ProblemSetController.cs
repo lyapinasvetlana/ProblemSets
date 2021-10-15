@@ -287,19 +287,19 @@ namespace ProblemSets.Controllers
                 .FirstOrDefaultAsync(m => m.ProblemSetId == id && m.AppUserId == User.Claims.ToList()[0].Value).Result;
             if (solvedProblem!=null)
             {
-                TempData.Add("Has Solution",$"You have already solved the problem. Your Answer: {solvedProblem.UserAnswer}");
+                TempData.Add("Has Solution",$": {solvedProblem.UserAnswer}");
             }
             else if (joke.ProblemAnswer.Contains(problem.ProblemAnswer[0]))
             {
                 _context.Add(new SolvedProblem {ProblemSetId = problem.Id, AppUserId = User.Claims.ToList()[0].Value, UserAnswer = problem.ProblemAnswer[0]} );
                 await _context.SaveChangesAsync();
-                TempData.Add("Good Alert","Correct solution!");
+                TempData.Add("Good Alert","");
             }
             
             
             else
             {
-                TempData.Add("Bad Alert","Incorrect solution!");
+                TempData.Add("Bad Alert","");
             }
 
             return RedirectToAction("Details", joke);
