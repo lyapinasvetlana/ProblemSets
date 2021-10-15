@@ -1,0 +1,132 @@
+﻿@model IEnumerable<ProblemSets.Models.ProblemSet>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center">
+    <h2 class="display-7">@Localizer["LastProblems"]</h2>
+</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Localizer["Name"]
+        </th>
+        <th>
+            @Localizer["Tags"]
+        </th>
+        <th>
+            @Localizer["Topic"]
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.OrderByDescending(s => s.Id).Take(4)) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProblemTagWithSpace)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Theme)
+            </td>
+            <td>
+                <a asp-action="Details" asp-controller="ProblemSet" asp-route-id="@item.Id">@Localizer["View"]</a> 
+            </td>
+
+        </tr>
+    }
+    </tbody>
+</table>
+<div class="text-center">
+    <h2 class="display-7">@Localizer["HighlyRated"]</h2>
+</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Localizer["Name"]
+        </th>
+        <th>
+            @Localizer["Tags"]
+        </th>
+        <th>
+            @Localizer["Topic"]
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.OrderByDescending(s => s.AverageRate).Take(4)) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProblemTagWithSpace)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Theme)
+            </td>
+            <td>
+                <a asp-action="Details" asp-controller="ProblemSet" asp-route-id="@item.Id">@Localizer["View"]</a> 
+            </td>
+
+        </tr>
+    }
+    </tbody>
+</table>
+<div id="wordcloud" style="height: 40vh;width:80%;display: block;margin-left: auto;margin-right: auto;">
+    @foreach (var tag in ViewBag.TagsGroped)
+    {
+        <span data-weight="@Enumerable.Count(tag)15">@tag.Key</span>
+    }
+</div>
+
+<style>
+canvas {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 800px;
+}
+</style>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script src="js/jquery.awesomeCloud-0.2.js"></script>
+
+
+
+
+<script>
+	var settings = {
+        
+		"size" : {
+			"grid" : 16,
+			"factor" : 0, 
+			"normalize" : false
+		},
+		
+        	
+        
+        "options" : {
+        	"color" : "random-light",
+        	"rotationRatio" : 0.3,
+        	"printMultiplier" : 1
+        	
+        },
+		"font" : "Futura, Helvetica, sans-serif",
+		"shape" : "square"
+	}
+	$( "#wordcloud" ).awesomeCloud( settings );
+</script>

@@ -1,0 +1,128 @@
+﻿@using Microsoft.Extensions.Localization
+@using ProblemSets.Controllers
+@inject IHttpContextAccessor _httpContextAccessor
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - Problem Sets</title>
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <script src="~/js/site.js"></script>
+
+    @{
+       
+            @if (_httpContextAccessor.HttpContext != null && _httpContextAccessor.HttpContext.Request.Cookies["theme"]?.ToString() == "on")
+            {
+                <link rel="stylesheet" href="~/lib/bootstrap/dist/css/dark/bootstrap.css"/>
+                <link rel="stylesheet" href="~/lib/bootstrap/dist/css/dark/_bootswatch.scss"/>
+                <link rel="stylesheet" href="~/lib/bootstrap/dist/css/dark/_variables.scss"/>
+            }
+            else
+            {
+                <link rel="stylesheet" href="~/lib/bootstrap/dist/css/light/bootstrap.css"/>
+                <link rel="stylesheet" href="~/lib/bootstrap/dist/css/light/_bootswatch.scss"/>
+                <link rel="stylesheet" href="~/lib/bootstrap/dist/css/light/_variables.scss"/>
+            }
+
+
+    }
+    
+</head>
+<body>
+@*<div>
+        @await Html.PartialAsync("_SelectLanguagePartial")
+    </div>*@
+<header>
+    @*////////////////
+    /////////////*@
+    @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">*@
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark  border-bottom box-shadow mb-3">
+
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Header"]</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" @*aria-controls="navbarSupportedContent"*@
+                    @*aria-expanded="false"*@ aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
+                    </li>
+                    @if (User != null && User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text" asp-area="" asp-controller="ProblemSet" asp-action="Index">@Localizer["MyProfile"]</a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text" asp-area="" asp-controller="Roles" asp-action="UserList">@Localizer["ChangeAdmins"]</a>
+                        </li>
+                    }
+                    <partial name="_LoginPartial"/>
+                </ul>
+
+
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    @using (Html.BeginForm("ShowSearchResults", "Home", FormMethod.Post))
+                    {
+                        <div class="search-bar">
+
+                            <input type="text" placeholder="&#128270 &#32 @Localizer["Search"]" name="SearchPhrase" id="SearchPhrase" style="color:#297258"/>
+                        </div>
+                    }
+
+                    @using (Html.BeginForm("SetTheme", "Home", FormMethod.Post))
+                    {
+                        if (_httpContextAccessor.HttpContext != null && _httpContextAccessor.HttpContext.Request.Cookies["theme"]?.ToString() == "on")
+                        {
+                            <div class="form-check form-switch" style="margin-left: 40px;">
+                                <label class="form-check-label">&#9788</label>
+                                <input value="off" name="theme" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked="" onChange="this.form.submit()">
+                                <input type="hidden" value="@_httpContextAccessor.HttpContext.Request.Path" name="path">
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-check form-switch" style="margin-left: 40px;">
+                                <label class="form-check-label" for="flexSwitchCheckDefault">&#9788</label>
+                                <input value="on" name="theme" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onChange="this.form.submit()">
+                                 <input type="hidden" value="@_httpContextAccessor.HttpContext.Request.Path" name="path">
+                            </div>
+                        }
+
+
+                    }
+                   
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <main role="main" class="pb-3">
+
+        @RenderBody()
+    </main>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
