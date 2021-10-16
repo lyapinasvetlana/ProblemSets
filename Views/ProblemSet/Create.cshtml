@@ -78,7 +78,8 @@ var pos=tag.indexOf(chip)
 if (pos > -1) {
   tag.splice(pos, 1);
 }
-console.log(tag)}
+console.log(tag)
+}
 
 function pushAnswers(chip){
 answers.push(chip)
@@ -92,9 +93,9 @@ if (pos > -1) {
 console.log(answers)}
 
 function getChips(){  
-      document.getElementById('myField').value=tag;}  
+      document.getElementById('MyTags').value=tag}  
 function getAnswers(){
-    document.getElementById('myAnswers').value=answers;}  
+    document.getElementById('MyAnswers').value=answers;}  
 
 
 </script>
@@ -124,11 +125,36 @@ function getAnswers(){
                 document.getElementById("submit-all").addEventListener("click", function(e) {
                     // Make sure that the form isn't actually being sent.
                     e.preventDefault();
-                    e.stopPropagation();
-                    dzClosure.processQueue();
+                    e.stopPropagation(); 
+                    
+                    if (dzClosure.getQueuedFiles().length > 0) {
+                        dzClosure.processQueue();
+                      }
+                    else {
+                        tag.forEach(elem => {
+                            var input = document.createElement("input");
+                            input.setAttribute("type", "hidden");
+                            input.setAttribute("name", "ProblemTag");
+                            input.setAttribute("value", "value_you_want");
+                            input.setAttribute("value", elem);
+                            document.getElementById("FileUploadForm").appendChild(input);
+                        })
+                        answers.forEach(elem => {
+                             var input = document.createElement("input");
+                             input.setAttribute("type", "hidden");
+                             input.setAttribute("name", "ProblemAnswer");
+                             input.setAttribute("value", "value_you_want");
+                             input.setAttribute("value", elem);
+                             document.getElementById("FileUploadForm").appendChild(input);
+                             })
+
+                        this.form.submit()
+                       
+                    }
                     
                     
                 });
+                 
         
                 //send all the form data along with the files:
                 this.on("sendingmultiple", function(data, xhr, formData) {
@@ -176,14 +202,17 @@ function load() {
 <div class="row">
     <div class="col-md-4">
         @*<form asp-action="Create">*@
-@using (Html.BeginForm("UploadFile", "ProblemSet", FormMethod.Post, new { enctype = "multipart/form-data" }))  
-            {
-               
+
+            
+               <form asp-action="UploadFile" id="FileUploadForm">
                 <div class="form-group">
                     <label class="control-label">Name</label>
                     <input asp-for="Name" class="form-control"/>
                     <input type="hidden" asp-for="AppUserId"  value="@ViewBag.IdForAdmin"/>
-                    </div><br>
+                    @*<input type="hidden" id="MyTags" asp-for="ProblemTag" />*@
+                    @*<input type="hidden" id="MyAnswers" asp-for="ProblemAnswer"/>*@
+                    <input type="hidden" id="MyAnswers" name="pictures"/>
+                </div><br>
                 <div class="form-group">
                     <label asp-for="Theme">Theme &#160</label>
                     <select asp-for="Theme" asp-items="ViewBag.Topics"></select>
@@ -210,11 +239,12 @@ function load() {
             </div><br>
             <div class="dropzone" id="myDropzone"></div><br>
                 <div class="form-group">
-                    <input type="hidden" id="myField" name="tags" value=""/>
-                    <input type="hidden" id="myAnswers" name="answers" value=""/>
-                    <input type="submit" id="submit-all" value="Create" class="btn btn-primary" onClick="load()"@*'window.location.replace("/ProblemSet)'*@/>
+                    @*<input type="hidden" id="myField" name="tags" value=""/>
+                    <input type="hidden" id="myAnswers" name="answers" value=""/>*@
+                    <input type="submit" id="submit-all" value="Create" class="btn btn-primary" onClick="load()"/>
                 </div><br>
-            }
+        </form>
+            
     </div>
 </div>
 

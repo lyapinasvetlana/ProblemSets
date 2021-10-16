@@ -354,9 +354,9 @@ namespace ProblemSets.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadFile(ProblemSet joke, string idForAdmin)
         {
-            
-            
-            
+
+
+            var kek = "dscs";
             var files = HttpContext.Request.Form.Files;
            
             

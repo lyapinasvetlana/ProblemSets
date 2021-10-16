@@ -161,9 +161,22 @@ function getAnswers(){
                     e.preventDefault();
                     e.stopPropagation();
                    
-                    dzClosure.processQueue();
-                    
-                    
+                    if (dzClosure.getQueuedFiles().length > 0) { dzClosure.processQueue();}
+                    else {tag.forEach(elem => {
+                            var input = document.createElement("input");
+                            input.setAttribute("type", "hidden");
+                            input.setAttribute("name", "ProblemTag");
+                            input.setAttribute("value", "value_you_want");
+                            input.setAttribute("value", elem);
+                            document.getElementById("FileUploadForm").appendChild(input);})
+                           answers.forEach(elem => {
+                             var input = document.createElement("input");
+                             input.setAttribute("type", "hidden");
+                             input.setAttribute("name", "ProblemAnswer");
+                             input.setAttribute("value", "value_you_want");
+                             input.setAttribute("value", elem);
+                             document.getElementById("FileUploadForm").appendChild(input);})
+                           this.form.submit()}
                 });
         
                 //send all the form data along with the files:
@@ -199,7 +212,7 @@ setTimeout(() => { window.location.replace("/ProblemSet");  }, 1000);
 <hr />
 <div class="row">
     <div class="col-md-4">
-        @using (Html.BeginForm("Edit", "ProblemSet", FormMethod.Post, new { enctype = "multipart/form-data" }))  { 
+        @using (Html.BeginForm("Edit", "ProblemSet", FormMethod.Post, new { enctype = "multipart/form-data", id="FileUploadForm"}))  { 
             <input type="hidden" asp-for="Id" />        
             <div class="form-group">
                 <label class="control-label">@Localizer["Name"]</label>
@@ -233,7 +246,7 @@ setTimeout(() => { window.location.replace("/ProblemSet");  }, 1000);
             @foreach (var item in ViewBag.Picture)
             {
                 <div class="input-group mb-3">
-                    <Img src="@item.PictureName" Width="200" Height="150">
+                    <Img src="@item.PictureName">
                     <form asp-action="DeleteFiles">
                         <input type="hidden" asp-for="Id" />    
                         <input type="hidden" name="picture" value="@item.PictureId"/>
