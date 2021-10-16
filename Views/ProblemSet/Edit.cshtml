@@ -245,14 +245,16 @@ setTimeout(() => { window.location.replace("/ProblemSet");  }, 1000);
             
             @foreach (var item in ViewBag.Picture)
             {
-                <div class="input-group mb-3">
-                    <Img src="@item.PictureName">
+                
+                    <Img src="@item.PictureName" Width=80% >
                     <form asp-action="DeleteFiles">
                         <input type="hidden" asp-for="Id" />    
                         <input type="hidden" name="picture" value="@item.PictureId"/>
-                        <input type="submit" value="Delete"  formaction="/ProblemSet/DeleteFiles" class="btn btn-danger"/>
+                         <div class="d-grid gap-2" style="width: 80%" >
+                         <input type="submit" value="Delete"  formaction="/ProblemSet/DeleteFiles" class="btn btn-danger"/>
+                         </div>
                     </form>
-                </div>
+                
             }<br>
             
             <div class="dropzone" id="myDropzone"></div><br>
