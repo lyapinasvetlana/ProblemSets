@@ -95,7 +95,7 @@ else
 @if (signInManager.IsSignedIn(User))
     {
         <div>
-            <a asp-action="Index">@Localizer["Back"]</a>
+            <a asp-action="Index" asp-route-userId="@Model.AppUserId">@Localizer["Back"]</a>
         </div><br>
         
 }

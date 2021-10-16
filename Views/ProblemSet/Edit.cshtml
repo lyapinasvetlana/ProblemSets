@@ -253,7 +253,7 @@ setTimeout(() => { window.location.replace("/ProblemSet");  }, 1000);
     </div>
 </div>
 <div>
-    <a asp-action="Index">@Localizer["Back"]</a>
+    <a asp-action="Index" asp-route-userId="@Model.AppUserId">@Localizer["Back"]</a>
 </div>
 
 @section Scripts {
