@@ -5,10 +5,9 @@
     @foreach (var user in Model)
     {
         <tr>
-            @*вместо айди сделать ссылки на страницы"*@
             <td>@user.Id</td> <td>@user.UserName</td>
             <td>
-                <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-userid="@user.Id">Права доступа</a>
+                <a class="btn btn-sm btn-primary" asp-action="Edit" method="post" asp-route-userid="@user.Id">Права доступа</a>
             </td>
         </tr>
     }

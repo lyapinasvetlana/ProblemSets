@@ -6,15 +6,8 @@ using System.Linq;
 
 namespace ProblemSets.Models
 {
-   
     public class ProblemSet
     {
-        private readonly AppIdentityDbContext _context;
-        public ProblemSet(AppIdentityDbContext context)
-        {
-            _context = context;
-        }
-
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
@@ -33,9 +26,7 @@ namespace ProblemSets.Models
         public AppUser AppUser { get; set; }
         
         public double? AverageRate { get; set; }
-        
 
-        
         public ProblemSet()
         {
 

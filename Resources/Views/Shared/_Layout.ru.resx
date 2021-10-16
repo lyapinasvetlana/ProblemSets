@@ -42,4 +42,7 @@
     <data name="Language" xml:space="preserve">
         <value>Язык</value>
     </data>
+    <data name="Manage Users" xml:space="preserve">
+        <value>Управление пользователями</value>
+    </data>
 </root>

@@ -34,8 +34,11 @@ namespace ProblemSets.Controllers
             _localizer = localizer;
         }
 
+        /*[Authorize(Roles="Admin")]*/
         public async Task<IActionResult> Index()
         {
+            
+            
             ViewData["Title"] = _localizer["Header"];
             ViewData["Message"] = _localizer["Message"];
             ViewBag.TagsGroped=  _context.ProblemSets.Select(l => l.ProblemTag).ToList().SelectMany(l => l).GroupBy(v => v);

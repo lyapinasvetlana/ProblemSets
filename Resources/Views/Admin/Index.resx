@@ -18,31 +18,10 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="ChangeAdmins" xml:space="preserve">
-        <value>Change Admin</value>
+    <data name="List of Users" xml:space="preserve">
+        <value />
     </data>
-    <data name="Header" xml:space="preserve">
-        <value>Problem Sets</value>
-    </data>
-    <data name="Home" xml:space="preserve">
-        <value>Home</value>
-    </data>
-    <data name="Login" xml:space="preserve">
-        <value>Login</value>
-    </data>
-    <data name="Logout" xml:space="preserve">
-        <value>Logout</value>
-    </data>
-    <data name="MyProfile" xml:space="preserve">
-        <value>My Profile</value>
-    </data>
-    <data name="Search" xml:space="preserve">
-        <value>Search...</value>
-    </data>
-    <data name="Language" xml:space="preserve">
-        <value>Language</value>
-    </data>
-    <data name="Manage Users" xml:space="preserve">
-        <value>Manage Users</value>
+    <data name="Manage" xml:space="preserve">
+        <value />
     </data>
 </root>

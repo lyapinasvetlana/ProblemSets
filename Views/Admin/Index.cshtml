@@ -1,0 +1,22 @@
+@model IEnumerable<ProblemSets.Models.AppUser>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = "title";;
+}
+
+<h2>@Localizer["List of Users"]</h2>
+<table class="table">
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Id</td> <td>@user.UserName</td>
+                <td>
+                    <form asp-action="Manage" asp-route-userid="@user.Id">
+                    <input type="submit" value="@Localizer["Manage"]"  class="btn btn-sm btn-primary"/>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>

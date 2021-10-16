@@ -28,9 +28,9 @@ namespace ProblemSets.Controllers
             _context = context;
         }
         
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string userId)
         {
-            var userId = User.Claims.ToList()[0].Value;
+            userId = userId==null? User.Claims.ToList()[0].Value:userId;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.TimeSortParm = sortOrder == "Date" ? "date_desc" : "Date";
             ViewBag.TopicSortParm = sortOrder == "Theme" ? "Theme_desc" : "Theme";
@@ -61,7 +61,7 @@ namespace ProblemSets.Controllers
             
             ViewBag.ProblemCreated = _context.ProblemSets.Count(problem => problem.AppUserId == userId) ;
             ViewBag.ProblemSolved = _context.SolvedProblems.Count(problem => problem.AppUserId == userId);
-            return View(problemSets );
+            return View(problemSets);
         }
         
         
@@ -140,7 +140,7 @@ namespace ProblemSets.Controllers
             };
             
             var joke = await _context.ProblemSets.FindAsync(id);
-            if (joke.AppUserId!=User.Claims.ToList()[0].Value)
+            if (joke.AppUserId!=User.Claims.ToList()[0].Value && !User.IsInRole("Admin"))
             {
                 return View("~/Views/Account/AccessDenied.cshtml");
             }
@@ -268,7 +268,8 @@ namespace ProblemSets.Controllers
             var joke = await _context.ProblemSets
                     
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (joke.AppUserId!=User.Claims.ToList()[0].Value)
+            
+            if (joke.AppUserId!=User.Claims.ToList()[0].Value && !User.IsInRole("Admin"))
             {
                 return View("~/Views/Account/AccessDenied.cshtml");
             }

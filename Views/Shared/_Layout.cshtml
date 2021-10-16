@@ -2,8 +2,9 @@
 @using ProblemSets.Controllers
 @inject IHttpContextAccessor _httpContextAccessor
 @using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Identity
 @inject IViewLocalizer Localizer
-
+@inject RoleManager<IdentityRole> _roleManager;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -66,11 +67,20 @@
                             <a class="nav-link text" asp-area="" asp-controller="ProblemSet" asp-action="Index">@Localizer["MyProfile"]</a>
                         </li>
                     }
+
+                    
                     @if (User.IsInRole("Admin"))
                     {
+                        
                         <li class="nav-item">
                             <a class="nav-link text" asp-area="" asp-controller="Roles" asp-action="UserList">@Localizer["ChangeAdmins"]</a>
                         </li>
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text" asp-area="" asp-controller="Admin" asp-action="Index">@Localizer["Manage Users"]</a>
+                         </li>
                     }
                     <partial name="_LoginPartial"/>
                      

@@ -11,12 +11,32 @@ namespace ProblemSets.Controllers
 {
     public class RolesController : Controller
     {
+        public const string SiteAdmin = "Admin";
+        public const string id = "3ec51dc1-6dea-4ab5-add9-eeebf25ef1c3";
         RoleManager<IdentityRole> _roleManager;
         UserManager<AppUser> _userManager;
+        
+
         public RolesController(RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            
+        }
+        
+        public async void CreateBaseRoles()
+        {
+            string id = "3ec51dc1-6dea-4ab5-add9-eeebf25ef1c3";
+            
+            if (!await _roleManager.RoleExistsAsync("Admin"))
+            {
+                var roleResult = await _roleManager.CreateAsync(new IdentityRole("Admin"));
+            }
+            var user = await _userManager.FindByIdAsync(id);
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var addedRoles = userRoles.Except(userRoles);
+            await _userManager.AddToRolesAsync(user, addedRoles);
+            
         }
         public IActionResult Index() => View(_roleManager.Roles.ToList());
  
@@ -66,7 +86,6 @@ namespace ProblemSets.Controllers
                 ChangeRoleViewModel model = new ChangeRoleViewModel
                 {
                     UserId = user.Id,
-                    UserEmail = user.Email,
                     UserRoles = userRoles,
                     AllRoles = allRoles
                 };

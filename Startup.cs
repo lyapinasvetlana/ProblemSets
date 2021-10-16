@@ -7,12 +7,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 /*using WebAppEnd.IdentityPolicy;*/
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
 using ProblemSets.ConfigDataBase;
 using ProblemSets.Models;
+using ProblemSets.ViewModels;
+
 /*using Microsoft.AspNetCore.Authorization;
 using WebAppEnd.CustomPolicy;*/
 
@@ -61,7 +65,7 @@ namespace ProblemSets
             services.AddAuthentication()
                 .AddGoogle(options =>
                 {
-                    options.ClientId = Environment.GetEnvironmentVariable("IDGOOGLE");;
+                    options.ClientId = Environment.GetEnvironmentVariable("IDGOOGLE");
                     options.ClientSecret = Environment.GetEnvironmentVariable("SECRETGOOGLE");
                     options.SignInScheme = IdentityConstants.ExternalScheme;
                 })
@@ -90,8 +94,8 @@ namespace ProblemSets
             services.AddHttpContextAccessor();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<IdentityRole> roleManager,UserManager<AppUser> userManager)
+        { 
             
             var supportedCultures = new string[] { "en", "ru" };
            
@@ -122,7 +126,6 @@ namespace ProblemSets
             
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
 
             app.UseAuthentication();
@@ -134,6 +137,22 @@ namespace ProblemSets
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            Task.Run(()=>this.CreateRoles(roleManager, userManager)).Wait();
+            
+        }
+
+        private async Task CreateRoles(RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager)
+        {
+            List<string> roles = new List<string>(){"Admin"};
+            await roleManager.CreateAsync(new IdentityRole("Admin"));
+            AppUser user = await userManager.FindByIdAsync(Environment.GetEnvironmentVariable("ADMIN_ID"));
+            if (user != null)
+            {
+                var userRoles = await userManager.GetRolesAsync(user);
+                var addedRoles = roles.Except(userRoles);
+                await userManager.AddToRolesAsync(user,addedRoles);
+            }
+           
         }
     }
 }
