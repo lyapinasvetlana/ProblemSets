@@ -30,6 +30,8 @@ namespace ProblemSets.Controllers
         
         public async Task<IActionResult> Index(string sortOrder, string userId)
         {
+            ViewBag.IdForAdmin = userId;
+            
             userId = userId==null? User.Claims.ToList()[0].Value:userId;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.TimeSortParm = sortOrder == "Date" ? "date_desc" : "Date";
@@ -61,7 +63,7 @@ namespace ProblemSets.Controllers
             
             ViewBag.ProblemCreated = _context.ProblemSets.Count(problem => problem.AppUserId == userId) ;
             ViewBag.ProblemSolved = _context.SolvedProblems.Count(problem => problem.AppUserId == userId);
-            return View(problemSets);
+            return View(problemSets.ToList());
         }
         
         
@@ -96,9 +98,10 @@ namespace ProblemSets.Controllers
 
         
         [Authorize]
-        public IActionResult Create()
+        public IActionResult Create(string idForAdmin)
         {
-        
+
+            ViewBag.IdForAdmin = idForAdmin;
             ViewBag.Topics  = new List<SelectListItem>
         {
             new SelectListItem { Value = "C#", Text = "C#" },
@@ -113,11 +116,12 @@ namespace ProblemSets.Controllers
         }
 
        
-        [Authorize]
+        /*[Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,ProblemQuestion,ProblemAnswer")] ProblemSet joke)
         {
+           
             if (ModelState.IsValid)
             {
                 _context.Add(joke);
@@ -125,11 +129,11 @@ namespace ProblemSets.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(joke);
-        }
+        }*/
 
        
         [Authorize]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, string userId)
         {
             ViewBag.Topics  = new List<SelectListItem>
             {
@@ -168,10 +172,8 @@ namespace ProblemSets.Controllers
         public async Task<IActionResult> Edit(int id, ProblemSet problemSet)
         {
 
-           
-            
             problemSet.ProblemTagWithSpace=string.Join(" ", problemSet.ProblemTag);
-            problemSet.AppUserId = User.Claims.ToList()[0].Value;
+            /*problemSet.AppUserId = (await _context.ProblemSets.FindAsync(id)).AppUserId;*/
             _context.Update(problemSet);
           
             var files = HttpContext.Request.Form.Files;
@@ -350,7 +352,7 @@ namespace ProblemSets.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadFile(ProblemSet joke)
+        public async Task<IActionResult> UploadFile(ProblemSet joke, string idForAdmin)
         {
             
             
@@ -362,7 +364,9 @@ namespace ProblemSets.Controllers
             {
                 joke.ProblemTagWithSpace=string.Join(" ", joke.ProblemTag);
                 joke.CreationTime=DateTimeOffset.Now;
-                joke.AppUserId = User.Claims.ToList()[0].Value;
+                if (joke.AppUserId==null) joke.AppUserId = User.Claims.ToList()[0].Value;
+             
+                
                 _context.Add(joke);
                 await _context.SaveChangesAsync();
             }

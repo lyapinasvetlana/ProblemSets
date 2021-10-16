@@ -23,55 +23,6 @@ namespace ProblemSets.Controllers
             _userManager = userManager;
             
         }
-        
-        public async void CreateBaseRoles()
-        {
-            string id = "3ec51dc1-6dea-4ab5-add9-eeebf25ef1c3";
-            
-            if (!await _roleManager.RoleExistsAsync("Admin"))
-            {
-                var roleResult = await _roleManager.CreateAsync(new IdentityRole("Admin"));
-            }
-            var user = await _userManager.FindByIdAsync(id);
-            var userRoles = await _userManager.GetRolesAsync(user);
-            var addedRoles = userRoles.Except(userRoles);
-            await _userManager.AddToRolesAsync(user, addedRoles);
-            
-        }
-        public IActionResult Index() => View(_roleManager.Roles.ToList());
- 
-        public IActionResult Create() => View();
-        [HttpPost]
-        public async Task<IActionResult> Create(string name)
-        {
-            if (!string.IsNullOrEmpty(name))
-            {
-                IdentityResult result = await _roleManager.CreateAsync(new IdentityRole(name));
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                }
-            }
-            return View(name);
-        }
-         
-        [HttpPost]
-        public async Task<IActionResult> Delete(string id)
-        {
-            IdentityRole role = await _roleManager.FindByIdAsync(id);
-            if (role != null)
-            {
-                IdentityResult result = await _roleManager.DeleteAsync(role);
-            }
-            return RedirectToAction("Index");
-        }
  
         public IActionResult UserList() => View(_userManager.Users.ToList());
  
@@ -80,7 +31,6 @@ namespace ProblemSets.Controllers
             AppUser user = await _userManager.FindByIdAsync(userId);
             if(user!=null)
             {
-              
                 var userRoles = await _userManager.GetRolesAsync(user);
                 var allRoles = _roleManager.Roles.ToList();
                 ChangeRoleViewModel model = new ChangeRoleViewModel

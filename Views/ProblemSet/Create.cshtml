@@ -136,6 +136,7 @@ function getAnswers(){
                     formData.append("ProblemQuestion", jQuery("#ProblemQuestion").val());
                     formData.append("Name", jQuery("#Name").val());
                     formData.append("Theme", jQuery("#Theme").val());
+                    formData.append("AppUserId", jQuery("#AppUserId").val());
                     tag.forEach(elem => formData.append("ProblemTag", elem))
                     answers.forEach(elem => formData.append("ProblemAnswer", elem))
                    
@@ -181,6 +182,7 @@ function load() {
                 <div class="form-group">
                     <label class="control-label">Name</label>
                     <input asp-for="Name" class="form-control"/>
+                    <input type="hidden" asp-for="AppUserId"  value="@ViewBag.IdForAdmin"/>
                     </div><br>
                 <div class="form-group">
                     <label asp-for="Theme">Theme &#160</label>

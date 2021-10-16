@@ -172,6 +172,7 @@ function getAnswers(){
                     formData.append("Theme", jQuery("#Theme").val());
                     formData.append("ProblemQuestion", jQuery("#ProblemQuestion").val());
                     formData.append("Id", jQuery("#Id").val());
+                    formData.append("AppUserId", jQuery("#AppUserId").val());
                     tag.forEach(elem => formData.append("ProblemTag", elem))
                     answers.forEach(elem => formData.append("ProblemAnswer", elem))
                     
@@ -203,6 +204,7 @@ setTimeout(() => { window.location.replace("/ProblemSet");  }, 1000);
             <div class="form-group">
                 <label class="control-label">@Localizer["Name"]</label>
                 <input asp-for="Name" class="form-control"/>
+                <input type="hidden" asp-for="AppUserId"  value="@Model.AppUserId"/>
             </div><br>
             <div class="form-group">
                 <label asp-for="Theme">@Localizer["Topic"] &#160</label>

@@ -12,20 +12,20 @@
 <h4>@Localizer["NumberCreatedProblems"] @ViewBag.ProblemCreated </h4>
 <h4>@Localizer["NumberSolvedProblems"] @ViewBag.ProblemSolved</h4>
 <p>
-    <a asp-action="Create">@Localizer["Create"]</a>
+    <a asp-action="Create" asp-route-idForAdmin="@Model.ToList()[0].AppUserId">@Localizer["Create"]</a>
 </p>
 <table class="table">
     <thead>
     <tr>
         <th>
             @*<a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Name)</a>*@
-            @Html.ActionLink(Localizer["Name"].Value, "Index", new { sortOrder = ViewBag.NameSortParm })
+            @Html.ActionLink(Localizer["Name"].Value, "Index", new { sortOrder = ViewBag.NameSortParm , userId= ViewBag.IdForAdmin})
         </th>
         <th>
-            @Html.ActionLink(Localizer["CreationTime"].Value, "Index", new { sortOrder = ViewBag.TimeSortParm })
+            @Html.ActionLink(Localizer["CreationTime"].Value, "Index", new { sortOrder = ViewBag.TimeSortParm, userId= ViewBag.IdForAdmin })
         </th>
         <th>
-             @Html.ActionLink(Localizer["Topic"].Value, "Index", new { sortOrder = ViewBag.TopicSortParm })
+             @Html.ActionLink(Localizer["Topic"].Value, "Index", new { sortOrder = ViewBag.TopicSortParm, userId= ViewBag.IdForAdmin })
         </th>
         <th></th>
     </tr>
@@ -43,6 +43,7 @@
                 @Html.DisplayFor(modelItem => item.Theme)
             </td>
             <td>
+               
                 <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["Edit"]</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">@Localizer["View"]</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["Delete"]</a>

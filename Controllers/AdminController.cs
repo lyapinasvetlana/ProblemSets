@@ -32,8 +32,7 @@ namespace ProblemSets.Controllers
                 }
  
                 return NotFound();
-            
-            /*return RedirectToAction("Index");*/
+                
         }
     }
 }
