@@ -1,27 +1,93 @@
 @model ProblemSets.Models.ProblemSet
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
     ViewData["Title"] = "Create";
 }
 
+<h1>Create</h1>
+<h4>Problem</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UploadFile" id="FileUploadForm">
+                <div class="form-group">
+                    <label class="control-label">Name</label>
+                    <input asp-for="Name" required="required" class="form-control" requied/>
+                    <input type="hidden" asp-for="AppUserId"  value="@ViewBag.IdForAdmin"/>
+                    
+                </div><br>
+                <div class="form-group">
+                    <label asp-for="Theme">Theme &#160</label>
+                    <select asp-for="Theme" asp-items="ViewBag.Topics"></select>
+                </div><br>
+                
+                <label class="control-label">@Localizer["Tags"]</label>
+                            <div class="chips chips-placeholder">
+                                <div class="chip"><i class="close material-icons">close</i></div>
+                            </div><br>
+
+                <div class="form-group">
+                    <label class="control-label">@Localizer["Quest"]</label><br />
+                    <textarea asp-for="ProblemQuestion" id="my-text-area"></textarea>
+                    <script>
+                      const easyMDE = new EasyMDE({element: document.getElementById('my-text-area')});
+                    </script>
+                </div><br>
+           
+                
+               <div class="form-group">
+                               <label class="control-label">@Localizer["Answer"]</label>
+                               <div class="chips chips-initial">
+                                   <div class="chip"><i class="close material-icons">close</i></div>
+                               </div>
+                           </div><br>
+            <div class="dropzone" id="myDropzone"></div><br>
+                <div class="form-group">
+                    <input type="submit" id="submit-all" value="Create" class="btn btn-primary" @*onClick="load()"*@/>
+                </div><br>
+        </form>
+            
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index" asp-route-userId="@ViewBag.IdForAdmin">Back to Problems</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+
 <script type="text/javascript">
 (function($){
   $(function(){
+
 	
 	$('.chipsss').material_chip();
     
+   
+   
         
 	$('.chips-placeholder').material_chip({
-	  placeholder: 'Enter a tag',
-	  secondaryPlaceholder: '+Tag',
+	  data: [],
+	  placeholder: '@Localizer["Enter a tag"]',
+	  secondaryPlaceholder: '@Localizer["Enter a tag"]',
 	  
 	  
 	});
 	
 	
     $('.chips-initial').material_chip({
-        placeholder: 'Enter answers',
-        secondaryPlaceholder: '+Answer',
+       data: [],
+       placeholder: '@Localizer["Enter Answer"]',
+       secondaryPlaceholder: '@Localizer["Enter Answer"]',
+       
       });
 
     
@@ -66,9 +132,10 @@
 })(jQuery);
 </script>
 
+
 <script>
-var tag=[]
-var answers=[]
+var tag= []
+var answers= []
 function pushChips(chip){
 tag.push(chip)
 console.log(tag)}
@@ -78,8 +145,7 @@ var pos=tag.indexOf(chip)
 if (pos > -1) {
   tag.splice(pos, 1);
 }
-console.log(tag)
-}
+console.log(tag)}
 
 function pushAnswers(chip){
 answers.push(chip)
@@ -93,15 +159,11 @@ if (pos > -1) {
 console.log(answers)}
 
 function getChips(){  
-      document.getElementById('MyTags').value=tag}  
+      document.getElementById('myField').value=tag;}  
 function getAnswers(){
-    document.getElementById('MyAnswers').value=answers;}  
-
+    document.getElementById('myAnswers').value=answers;}  
 
 </script>
-
-@*/////////////
-/////////////*@
 
 <link href="~/Dropzone/css/basic.css" rel="stylesheet" />
 <link href="~/Dropzone/css/dropzone.css" rel="stylesheet" />
@@ -117,143 +179,55 @@ function getAnswers(){
             acceptedFiles: 'image/*',
             addRemoveLinks: true,
             init: function() {
-               
-                
-                dzClosure = this; // Makes sure that 'this' is understood inside the functions below.
-        
-                // for Dropzone to process the queue (instead of default form behavior):
+                dzClosure = this; 
                 document.getElementById("submit-all").addEventListener("click", function(e) {
-                    // Make sure that the form isn't actually being sent.
+                    
                     e.preventDefault();
                     e.stopPropagation(); 
-                    
-                    if (dzClosure.getQueuedFiles().length > 0) {
-                        dzClosure.processQueue();
-                      }
-                    else {
-                        tag.forEach(elem => {
-                            var input = document.createElement("input");
-                            input.setAttribute("type", "hidden");
-                            input.setAttribute("name", "ProblemTag");
-                            input.setAttribute("value", "value_you_want");
-                            input.setAttribute("value", elem);
-                            document.getElementById("FileUploadForm").appendChild(input);
-                        })
+                    var fields = ["Name"]
+                if (fields.some(element => this.form[element].value ==="") || tag.length===0 || answers.length===0 ||easyMDE.value()==="" ) {
+                    alert( "не все поля заполнены") }
+                else{
+                  if (dzClosure.getQueuedFiles().length > 0) {
+                      dzClosure.processQueue();
+                      load();}
+                  else {tag.forEach(elem => {
+                                   var input = document.createElement("input");
+                                   input.setAttribute("type", "hidden");
+                                   input.setAttribute("name", "ProblemTag");
+                                   input.setAttribute("value", "value_you_want");
+                                   input.setAttribute("value", elem);
+                                   document.getElementById("FileUploadForm").appendChild(input);})
                         answers.forEach(elem => {
-                             var input = document.createElement("input");
-                             input.setAttribute("type", "hidden");
-                             input.setAttribute("name", "ProblemAnswer");
-                             input.setAttribute("value", "value_you_want");
-                             input.setAttribute("value", elem);
-                             document.getElementById("FileUploadForm").appendChild(input);
-                             })
-
+                                   var input = document.createElement("input");
+                                   input.setAttribute("type", "hidden");
+                                   input.setAttribute("name", "ProblemAnswer");
+                                   input.setAttribute("value", "value_you_want");
+                                   input.setAttribute("value", elem);
+                                   document.getElementById("FileUploadForm").appendChild(input);})
+                                   
                         this.form.submit()
-                       
-                    }
-                    
-                    
+                        load();
+                        }}  
                 });
-                 
-        
-                //send all the form data along with the files:
                 this.on("sendingmultiple", function(data, xhr, formData) {
                     
-                    formData.append("ProblemQuestion", jQuery("#ProblemQuestion").val());
+                    formData.append("ProblemQuestion", easyMDE.value());
                     formData.append("Name", jQuery("#Name").val());
                     formData.append("Theme", jQuery("#Theme").val());
                     formData.append("AppUserId", jQuery("#AppUserId").val());
                     tag.forEach(elem => formData.append("ProblemTag", elem))
                     answers.forEach(elem => formData.append("ProblemAnswer", elem))
-                   
-
                 });  
-                
-                
             }
         }
 </script>
 
-
-
 <script>
 function load() {   
-   
     setTimeout(() => { window.location.replace("/ProblemSet");  }, 1000);
 } 
 </script>
 
-<h1>Create</h1>
 
-<h4>Problem</h4>
-<hr />
-@*<style>
-    label {
-        color: rgba(55,87,222,0.92);
-        font-weight: bold;
-    }   
-  
-</style>*@
-<style>
-.hiddendiv{
-  display: none
-}
-</style>
-<div class="row">
-    <div class="col-md-4">
-        @*<form asp-action="Create">*@
-
-            
-               <form asp-action="UploadFile" id="FileUploadForm">
-                <div class="form-group">
-                    <label class="control-label">Name</label>
-                    <input asp-for="Name" class="form-control"/>
-                    <input type="hidden" asp-for="AppUserId"  value="@ViewBag.IdForAdmin"/>
-                    @*<input type="hidden" id="MyTags" asp-for="ProblemTag" />*@
-                    @*<input type="hidden" id="MyAnswers" asp-for="ProblemAnswer"/>*@
-                    <input type="hidden" id="MyAnswers" name="pictures"/>
-                </div><br>
-                <div class="form-group">
-                    <label asp-for="Theme">Theme &#160</label>
-                    <select asp-for="Theme" asp-items="ViewBag.Topics"></select>
-                </div><br>
-                
-                <label class="control-label">Tags</label>
-                <div class="chips chips-placeholder">
-                    <div class="chip">
-                        <i class="material-icons close">close</i>
-                    </div>
-                </div><br>
-
-                <div class="form-group">
-                    <label class="control-label">Problem Question</label><br />
-                    <textarea asp-for="ProblemQuestion" cols="40" class="materialize-textarea"></textarea>
-                </div><br>
-            <div class="form-group">
-                <label class="control-label">Problem Answers</label>
-                <div class="chips chips-initial">
-                    <div class="chip">
-                        <i class="close material-icons"></i>
-                    </div>
-                </div>
-            </div><br>
-            <div class="dropzone" id="myDropzone"></div><br>
-                <div class="form-group">
-                    @*<input type="hidden" id="myField" name="tags" value=""/>
-                    <input type="hidden" id="myAnswers" name="answers" value=""/>*@
-                    <input type="submit" id="submit-all" value="Create" class="btn btn-primary" onClick="load()"/>
-                </div><br>
-        </form>
-            
-    </div>
-</div>
-
-
-<div>
-    <a asp-action="Index" asp-route-userId="@ViewBag.IdForAdmin">Back to Problems</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
 
