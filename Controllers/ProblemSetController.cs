@@ -143,8 +143,9 @@ namespace ProblemSets.Controllers
                 new SelectListItem { Value = "Other", Text = "Other"  },
             };
             
+            
             var joke = await _context.ProblemSets.FindAsync(id);
-            if (joke.AppUserId!=User.Claims.ToList()[0].Value && !User.IsInRole("Admin"))
+            if (joke!=null &&joke.AppUserId!=User.Claims.ToList()[0].Value && !User.IsInRole("Admin"))
             {
                 return View("~/Views/Account/AccessDenied.cshtml");
             }
@@ -152,30 +153,20 @@ namespace ProblemSets.Controllers
             ViewBag.Picture=await _context.PicturesStores 
                 .Where(m => m.ProblemSetId == id).ToArrayAsync();
             
-            
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            
-            if (joke == null)
-            {
-                return NotFound();
-            }
             return View(joke);
         }
 
        
         [HttpPost]
         /*[ValidateAntiForgeryToken]*/
-        public async Task<IActionResult> Edit(int id, ProblemSet problemSet)
+        public async Task<IActionResult> EditFile(int id, ProblemSet problemSet)
         {
 
+            var kek = "dsfdsfdsf";
             problemSet.ProblemTagWithSpace=string.Join(" ", problemSet.ProblemTag);
             /*problemSet.AppUserId = (await _context.ProblemSets.FindAsync(id)).AppUserId;*/
             _context.Update(problemSet);
-          
+            await _context.SaveChangesAsync();
             var files = HttpContext.Request.Form.Files;
             if (id != problemSet.Id)
             {
@@ -229,33 +220,12 @@ namespace ProblemSets.Controllers
                 var fileTransferUtility = new TransferUtility(client);
                 //await fileTransferUtility.UploadAsync(uploadRequest);
                 
-                 await _context.AddAsync(documentStore);
-                //_context.PicturesStores.Add(documentStore);
+               
+                _context.PicturesStores.Add(documentStore);
                 await _context.SaveChangesAsync();
+            }
 
-            }
-            
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(problemSet);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!JokeExists(problemSet.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(problemSet);
+            return Redirect("Index");
         }
 
        

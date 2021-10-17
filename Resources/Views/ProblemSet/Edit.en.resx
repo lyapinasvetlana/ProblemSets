@@ -51,4 +51,7 @@
     <data name="Edit" xml:space="preserve">
         <value>Edit</value>
     </data>
+    <data name="Alert Empty" xml:space="preserve">
+        <value> Some fields are blank!!!</value>
+    </data>
 </root>
