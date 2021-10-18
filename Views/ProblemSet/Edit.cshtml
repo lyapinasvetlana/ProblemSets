@@ -9,7 +9,6 @@
 }
 
 
-
 <h1>@Localizer["Edit"]</h1>
 
 <h4>@Localizer["Problem"]</h4>
@@ -109,11 +108,6 @@ for(var i = 0; i < array.length; i++) {
 (function($){
   $(function(){
 	
-	$('.chipsss').material_chip();
-    
-   
-   
-        
 	$('.chips-placeholder').material_chip({
 	  data: tagsMeta,
 	  placeholder: '@Localizer["Enter a tag"]',
@@ -129,28 +123,21 @@ for(var i = 0; i < array.length; i++) {
        secondaryPlaceholder: '@Localizer["Enter Answer"]',
        
       });
-    
-    
+
 	$(".dropdown-trigger").dropdown();
     
     
       $('.chips-initial').on('chip.add', function(e, chip){
-          alert(chip.tag)
-          console.log(chip)
-         
           pushAnswers(chip.tag)
           
         // you have the added chip here
       });
     
       $('.chips-initial').on('chip.delete', function(e, chip){
-       alert("pek")
-       console.log(chip)
         dropAnswers(chip.tag)
       });
       
        $('.chips-placeholder').on('chip.add', function(e, chip){
-                
                  pushChips(chip.tag)
             });
             $('.chips-placeholder').on('chip.delete', function(e, chip){
@@ -254,8 +241,6 @@ function getAnswers(){
                              load();
                              }
                 }});
-        
-                //send all the form data along with the files:
                 this.on("sendingmultiple", function(data, xhr, formData) {
                     formData.append("Name", jQuery("#Name").val());
                     formData.append("Theme", jQuery("#Theme").val());
@@ -266,8 +251,6 @@ function getAnswers(){
                     answers.forEach(elem => formData.append("ProblemAnswer", elem))
                     
                 });  
-                
-               
             }
         }
 </script>

@@ -87,7 +87,7 @@
     </tbody>
 </table>
 <div id="wordcloud" style="height: 40vh;width:80%;display: block;margin-left: auto;margin-right: auto;">
-    @foreach (var tag in ViewBag.TagsGroped)
+    @foreach (var tag in ViewBag.TagsGrouped)
     {
         <span data-weight="@Enumerable.Count(tag)15">@tag.Key</span>
     }

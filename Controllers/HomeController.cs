@@ -21,6 +21,7 @@ using ProblemSets.Models;
 
 namespace ProblemSets.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -34,16 +35,11 @@ namespace ProblemSets.Controllers
             _localizer = localizer;
         }
 
-        /*[Authorize(Roles="Admin")]*/
+
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            
-            
-            ViewData["Title"] = _localizer["Header"];
-            ViewData["Message"] = _localizer["Message"];
-            ViewBag.TagsGroped=  _context.ProblemSets.Select(l => l.ProblemTag).ToList().SelectMany(l => l).GroupBy(v => v);
-
-
+            ViewBag.TagsGrouped=  _context.ProblemSets.Select(l => l.ProblemTag).ToList().SelectMany(l => l).GroupBy(v => v);
             return View(await _context.ProblemSets.ToListAsync());
         }
 
@@ -55,25 +51,7 @@ namespace ProblemSets.Controllers
             return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
         }
         
-      
-        [HttpPost]
-        public ActionResult SaveUploadedFile(List<IFormFile> file)
-        {
-            var files = HttpContext.Request.Form.Files;
-            var kek = file;
-            bool isSavedSuccessfully = true;
 
-            if (isSavedSuccessfully)
-            {
-                return Json(new { Message = "File saved" });
-            }
-            else
-            {
-                return Json(new { Message = "Error in saving file" });
-            }
-        }
-
-       
         public async Task<IActionResult> ShowSearchResults(String SearchPhrase)
         {
            
@@ -85,6 +63,7 @@ namespace ProblemSets.Controllers
             
             return View(npgsql);
         }
+        
         public async Task<IActionResult> SetTheme(string theme, string path)
         {
             

@@ -35,10 +35,7 @@ namespace ProblemSets.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        /// <summary>
-        /// бустрап
-        /// </summary>
-        /// <returns></returns>
+        
         public IActionResult AccessDenied()
         {
             return View();
@@ -75,7 +72,6 @@ namespace ProblemSets.Controllers
             {
                 AppUser user = new AppUser
                 {
-                    //Email = info.Principal.FindFirst(ClaimTypes.Email).Value,
                     UserName = info.Principal.FindFirst(ClaimTypes.Name).Value,
                     NameSocialMedia = info.LoginProvider
                 };

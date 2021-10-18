@@ -1,11 +1,13 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProblemSets.Models;
 
 namespace ProblemSets.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly AppIdentityDbContext _context;
@@ -16,6 +18,7 @@ namespace ProblemSets.Controllers
             _context = context;
             _userManager = userManager;
         }
+        
         
         public IActionResult Index()
         {

@@ -24,4 +24,8 @@
     <data name="List of Users" xml:space="preserve">
         <value>Список пользователей</value>
     </data>
+    <data name="Right" xml:space="preserve">
+        <value>Права доступа</value>
+        <comment>Right</comment>
+    </data>
 </root>
