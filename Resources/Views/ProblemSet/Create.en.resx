@@ -21,4 +21,47 @@
     <data name="Alert Empty" xml:space="preserve">
         <value>Some fileds are blank!!!</value>
     </data>
+    <data name="Problem" xml:space="preserve">
+        <value>Problem</value>
+    </data>
+    <data name="Create" xml:space="preserve">
+        <value>Create</value>
+        <comment>Create</comment>
+    </data>
+    <data name="Topic" xml:space="preserve">
+        <value>Topic</value>
+        <comment>Topic</comment>
+    </data>
+    <data name="Tags" xml:space="preserve">
+        <value>Tags</value>
+        <comment>Tags</comment>
+    </data>
+    <data name="Question" xml:space="preserve">
+        <value>Question</value>
+        <comment>Question</comment>
+    </data>
+    <data name="Answer" xml:space="preserve">
+        <value>Problem answer</value>
+        <comment>Answer</comment>
+    </data>
+    <data name="Enter a tag" xml:space="preserve">
+        <value>Enter a tag</value>
+        <comment>Enter a tag</comment>
+    </data>
+    <data name="Enter Answer" xml:space="preserve">
+        <value>Enter Answer</value>
+        <comment>Enter Answer</comment>
+    </data>
+    <data name="Back" xml:space="preserve">
+        <value>Back</value>
+        <comment>Back</comment>
+    </data>
+    <data name="Name" xml:space="preserve">
+        <value>Name</value>
+        <comment>Name</comment>
+    </data>
+    <data name="Drop files here to upload" xml:space="preserve">
+        <value>Drop files here to upload</value>
+        <comment>Drop files here to upload</comment>
+    </data>
 </root>

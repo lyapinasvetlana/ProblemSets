@@ -6,20 +6,20 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-<h4>Problem</h4>
+<h1>@Localizer["Create"]</h1>
+<h4>@Localizer["Problem"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="UploadFile" id="FileUploadForm">
                 <div class="form-group">
-                    <label class="control-label">Name</label>
+                    <label class="control-label">@Localizer["Name"]</label>
                     <input asp-for="Name" required="required" class="form-control" requied/>
                     <input type="hidden" asp-for="AppUserId"  value="@ViewBag.IdForAdmin"/>
                     
                 </div><br>
                 <div class="form-group">
-                    <label asp-for="Theme">Theme &#160</label>
+                    <label asp-for="Theme">@Localizer["Topic"] &#160</label>
                     <select asp-for="Theme" asp-items="ViewBag.Topics"></select>
                 </div><br>
                 
@@ -29,7 +29,7 @@
                             </div><br>
 
                 <div class="form-group">
-                    <label class="control-label">@Localizer["Quest"]</label><br />
+                    <label class="control-label">@Localizer["Question"]</label><br />
                     <textarea asp-for="ProblemQuestion" id="my-text-area"></textarea>
                     <script>
                       const easyMDE = new EasyMDE({element: document.getElementById('my-text-area')});
@@ -45,7 +45,7 @@
                            </div><br>
             <div class="dropzone" id="myDropzone"></div><br>
                 <div class="form-group">
-                    <input type="submit" id="submit-all" value="Create" class="btn btn-primary" @*onClick="load()"*@/>
+                    <input type="submit" id="submit-all" value="@Localizer["Create"]" class="btn btn-primary" />
                 </div><br>
         </form>
             
@@ -54,7 +54,7 @@
 
 
 <div>
-    <a asp-action="Index" asp-route-userId="@ViewBag.IdForAdmin">Back to Problems</a>
+    <a asp-action="Index" asp-route-userId="@ViewBag.IdForAdmin">@Localizer["Back"]</a>
 </div>
 
 @section Scripts {
@@ -123,10 +123,6 @@
       $('.chips').on('chip.select', function(e, chip){
         alert("end")
       });
-      
-      
-      
-   
 
   }); 
 })(jQuery);
@@ -170,6 +166,7 @@ function getAnswers(){
 <script src="~/Dropzone/dropzone.min.js"></script>
 <script type="text/javascript">
         Dropzone.options.myDropzone= {
+            dictDefaultMessage : "@Localizer["Drop files here to upload"]",
             url: "/ProblemSet/UploadFile",
             autoProcessQueue: false,
             uploadMultiple: true,
@@ -228,6 +225,12 @@ function load() {
     setTimeout(() => { window.location.replace("/ProblemSet");  }, 1000);
 } 
 </script>
+
+<style>
+.dz-default{
+color: #050505;
+}
+</style>
 
 
 

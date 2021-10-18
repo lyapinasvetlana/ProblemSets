@@ -1,2 +1,5 @@
-<h2 class="bg-danger mb-1 p-2 text-white">Access Denied</h2>
-<a asp-action="Index" asp-controller="Home" class="btn btn-primary">OK</a>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<h2 class="bg-danger mb-1 p-2 text-white">@Localizer["AccessDenied"]</h2>
+<a asp-action="Index" asp-controller="Home" class="btn btn-primary">@Localizer["OKAY"]</a>

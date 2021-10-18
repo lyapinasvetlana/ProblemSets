@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Delete";
 }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.0/showdown.min.js"></script>
 
 <h1>@Localizer["Delete"]</h1>
 
@@ -29,7 +30,12 @@
             <dt class="col-sm-2">
                 <label class="control-label">@Localizer["Quest"]</label></dt>
         <dd class="col-sm-10">
-            <span style="white-space: pre-line">@Model.ProblemQuestion</span>
+            <span id="my-text-area" style="white-space: pre-line">@Model.ProblemQuestion</span>
+            <script> 
+                    var conv = new showdown.Converter();
+                    var txt = document.getElementById('my-text-area').innerHTML;
+                    document.getElementById('my-text-area').innerHTML = conv.makeHtml(txt);
+             </script>
         </dd>
     </dl>
     <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">

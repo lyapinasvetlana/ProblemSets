@@ -1,13 +1,15 @@
+@using Microsoft.AspNetCore.Mvc.Localization
 @model IEnumerable<ProblemSets.Models.AppUser>
- 
-<h2>Список пользователей</h2>
+@inject IViewLocalizer Localizer
+
+<h2>@Localizer["List of Users"]</h2>
 <table class="table">
     @foreach (var user in Model)
     {
         <tr>
             <td>@user.Id</td> <td>@user.UserName</td>
             <td>
-                <a class="btn btn-sm btn-primary" asp-action="Edit" method="post" asp-route-userid="@user.Id">Права доступа</a>
+                <a class="btn btn-sm btn-primary" asp-action="Edit" method="post" asp-route-userid="@user.Id">@Localizer["Rights"]</a>
             </td>
         </tr>
     }

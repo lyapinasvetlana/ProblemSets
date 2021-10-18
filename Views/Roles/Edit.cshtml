@@ -1,8 +1,10 @@
 @using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
 @model ProblemSets.ViewModels.ChangeRoleViewModel
- 
-<h2>Изменение ролей для пользователя @Model.UserId</h2>
- 
+@inject IViewLocalizer Localizer
+
+<h2>@Localizer["Change"]</h2>
+<h4> @Model.UserId</h4>
 <form asp-action="Edit" method="post">
     <input type="hidden" name="userId" value="@Model.UserId" />
     <div class="form-group">
@@ -12,5 +14,5 @@
                    @(Model.UserRoles.Contains(role.Name) ? "checked=\"checked\"" : "") />@role.Name <br />
         }
     </div>
-    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <button type="submit" class="btn btn-primary">@Localizer["Save"]</button>
 </form>

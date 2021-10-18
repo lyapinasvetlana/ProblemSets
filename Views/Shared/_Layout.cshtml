@@ -12,15 +12,8 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - Problem Sets</title>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
-    <style>
-        .starter-template{
-          margin-top: 100px;
-        }
-    </style>
     <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
     <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
-    <link rel="stylesheet" href="mdeditor.css">
     <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
@@ -29,8 +22,7 @@
     <script src="~/js/site.js"></script>
 
     @{
-       
-            @if (_httpContextAccessor.HttpContext != null && _httpContextAccessor.HttpContext.Request.Cookies["theme"]?.ToString() == "on")
+        @if (_httpContextAccessor.HttpContext != null && _httpContextAccessor.HttpContext.Request.Cookies["theme"]?.ToString() == "on")
             {
                 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/dark/bootstrap.css"/>
                 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/dark/_bootswatch.scss"/>
@@ -42,19 +34,12 @@
                 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/light/_bootswatch.scss"/>
                 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/light/_variables.scss"/>
             }
-
-
     }
     
 </head>
 <body>
-@*<div>
-        @await Html.PartialAsync("_SelectLanguagePartial")
-    </div>*@
+
 <header>
-    @*////////////////
-    /////////////*@
-    @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">*@
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark  border-bottom box-shadow mb-3">
 
         <div class="container">
@@ -136,7 +121,6 @@
 </header>
 <div class="container">
     <main role="main" class="pb-3">
-
         @RenderBody()
     </main>
 </div>

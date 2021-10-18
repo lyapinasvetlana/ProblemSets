@@ -19,6 +19,49 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="Alert Empty" xml:space="preserve">
-        <value>Некоторые поля не заполены!!!</value>
+        <value>Некоторые поля не заполенын!!!</value>
+    </data>
+    <data name="Problem" xml:space="preserve">
+        <value>Задача</value>
+    </data>
+    <data name="Create" xml:space="preserve">
+        <value>Создать</value>
+        <comment>Create</comment>
+    </data>
+    <data name="Topic" xml:space="preserve">
+        <value>Тема</value>
+        <comment>Topic</comment>
+    </data>
+    <data name="Tags" xml:space="preserve">
+        <value>Тэги</value>
+        <comment>Tags</comment>
+    </data>
+    <data name="Question" xml:space="preserve">
+        <value>Вопрос</value>
+        <comment>Question</comment>
+    </data>
+    <data name="Answer" xml:space="preserve">
+        <value>Ответ</value>
+        <comment>Answer</comment>
+    </data>
+    <data name="Enter a tag" xml:space="preserve">
+        <value>Введите тэг</value>
+        <comment>Enter a tag</comment>
+    </data>
+    <data name="Enter Answer" xml:space="preserve">
+        <value>Введите ответ</value>
+        <comment>Enter Answer</comment>
+    </data>
+    <data name="Back" xml:space="preserve">
+        <value>Вернуться</value>
+        <comment>Back</comment>
+    </data>
+    <data name="Name" xml:space="preserve">
+        <value>Название</value>
+        <comment>Name</comment>
+    </data>
+    <data name="Drop files here to upload" xml:space="preserve">
+        <value>Выберите файлы</value>
+        <comment>Drop files here to upload</comment>
     </data>
 </root>

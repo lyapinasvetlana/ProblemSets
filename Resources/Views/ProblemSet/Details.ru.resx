@@ -57,4 +57,8 @@
     <data name="Send" xml:space="preserve">
         <value>Отправить решение</value>
     </data>
+    <data name="No ratings" xml:space="preserve">
+        <value>Нет оценок</value>
+        <comment>No ratings</comment>
+    </data>
 </root>

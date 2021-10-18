@@ -18,19 +18,13 @@
         <value>Number of problem sets created: </value>
     </data>
     <data name="NumberSolvedProblems" xml:space="preserve">
-        <value>Number of solved problem setCreate a New Problem</value>
-    </data>
-    <data name="Create" xml:space="preserve">
-        <value>Create New Problem</value>
+        <value>Number of solved problem set:</value>
     </data>
     <data name="Name" xml:space="preserve">
         <value>Name</value>
     </data>
     <data name="CreationTime" xml:space="preserve">
         <value>Creation Time</value>
-    </data>
-    <data name="Topic" xml:space="preserve">
-        <value>Topic</value>
     </data>
     <data name="Edit" xml:space="preserve">
         <value>Edit</value>
@@ -40,5 +34,12 @@
     </data>
     <data name="Delete" xml:space="preserve">
         <value>Delete</value>
+    </data>
+    <data name="Topic" xml:space="preserve">
+        <value>Topic</value>
+    </data>
+    <data name="Create" xml:space="preserve">
+        <value>Create</value>
+        <comment>Create</comment>
     </data>
 </root>

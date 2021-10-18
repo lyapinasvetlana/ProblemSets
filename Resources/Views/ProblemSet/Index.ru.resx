@@ -18,19 +18,13 @@
         <value>Число созданных задач:</value>
     </data>
     <data name="NumberSolvedProblems" xml:space="preserve">
-        <value>Число решённых задач</value>
-    </data>
-    <data name="Create" xml:space="preserve">
-        <value>Создать новую задачу</value>
+        <value>Число решённых задач:</value>
     </data>
     <data name="Name" xml:space="preserve">
         <value>Имя</value>
     </data>
     <data name="CreationTime" xml:space="preserve">
         <value>Время создания</value>
-    </data>
-    <data name="Topic" xml:space="preserve">
-        <value>Тема</value>
     </data>
     <data name="Edit" xml:space="preserve">
         <value>Редактировать</value>
@@ -40,5 +34,12 @@
     </data>
     <data name="Delete" xml:space="preserve">
         <value>Удалить</value>
+    </data>
+    <data name="Topic" xml:space="preserve">
+        <value>Тема</value>
+    </data>
+    <data name="Create" xml:space="preserve">
+        <value>Создать</value>
+        <comment>Create</comment>
     </data>
 </root>

@@ -13,7 +13,7 @@
 <div>
     <h4>@Model.Name @if (Model.AverageRate == null)
                     {
-                        <span style="color:#ff0000"> &#9733 No ratings</span>
+                        <span style="color:#ff0000"> &#9733 @Localizer["No ratings"]</span>
                     }
                     else
                     {
@@ -106,11 +106,11 @@ else
 }
   
 
-if (TempData.ContainsKey("Bad Alert"))
+@if (ViewBag.Solution=="Wrong")
 {
     <div class ="alert alert-danger" role="alert">@Localizer["Wrong"]</div>
 }
-if (TempData.ContainsKey("Good Alert"))
+@if (ViewBag.Solution=="Correct")
 {
     <div class ="alert alert-success" role="alert">@Localizer["Correct"]</div>
 }

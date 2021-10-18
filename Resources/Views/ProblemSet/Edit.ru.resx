@@ -54,4 +54,8 @@
     <data name="Alert Empty" xml:space="preserve">
         <value>Остались незаполненные поля!</value>
     </data>
+    <data name="Drop files here to upload" xml:space="preserve">
+        <value>Выберите файлы для загрузки</value>
+        <comment>Drop files here to upload</comment>
+    </data>
 </root>

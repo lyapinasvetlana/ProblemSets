@@ -53,6 +53,26 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>Create.en.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Roles\UserList.en.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>UserList.en.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Roles\UserList.ru.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>UserList.ru.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Roles\Edit.ru.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Edit.ru.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Account\AccessDenired.ru.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>AccessDenired.ru.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Account\Login.ru.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Login.ru.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
@@ -100,6 +120,31 @@
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>Create.en.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Roles\UserList.en.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>UserList.en.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Roles\UserList.ru.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>UserList.ru.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Roles\Edit.ru.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Edit.ru.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Account\AccessDenired.ru.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>AccessDenired.ru.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Account\Login.ru.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Login.ru.resx</DependentUpon>
       </Compile>
     </ItemGroup>
 

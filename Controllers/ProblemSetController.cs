@@ -249,34 +249,30 @@ namespace ProblemSets.Controllers
         }
         
         [Authorize]
-        public async Task<IActionResult> SendSolution(int id, /*[Bind("Id,ProblemQuestion,ProblemAnswer")] */ProblemSet problem)
+        public async Task<IActionResult> SendSolution(int id, ProblemSet problem)
         {
-            
-
             ViewBag.Pictures=await _context.PicturesStores
                 .Where(m => m.ProblemSetId == id).ToArrayAsync();
-            var joke = await _context.ProblemSets.FindAsync(id);
+            var problemSet = await _context.ProblemSets.FindAsync(id);
             var solvedProblem = _context.SolvedProblems
                 .FirstOrDefaultAsync(m => m.ProblemSetId == id && m.AppUserId == User.Claims.ToList()[0].Value).Result;
             if (solvedProblem!=null)
             {
                 TempData.Add("Has Solution",$": {solvedProblem.UserAnswer}");
             }
-            else if (joke.ProblemAnswer.Contains(problem.ProblemAnswer[0]))
+            else if (problemSet.ProblemAnswer.Contains(problem.ProblemAnswer[0]))
             {
                 _context.Add(new SolvedProblem {ProblemSetId = problem.Id, AppUserId = User.Claims.ToList()[0].Value, UserAnswer = problem.ProblemAnswer[0]} );
                 await _context.SaveChangesAsync();
-                TempData.Add("Good Alert","");
+                ViewBag.Solution="Correct";
             }
-            
             
             else
             {
-                TempData.Add("Bad Alert","");
+                ViewBag.Solution = "Wrong";
             }
 
-            return RedirectToAction("Details", joke);
-            //return View("Details", problemSet);
+            return View("Details", problemSet);
         }
         
         
@@ -290,20 +286,13 @@ namespace ProblemSets.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        private bool JokeExists(int id)
-        {
-            return _context.ProblemSets.Any(e => e.Id == id);
-        }
+        
         
         [HttpPost]
         public async Task<IActionResult> DeleteFiles(int id)
         {
             var idPicture = Request.Form["picture"][0];
             var picture = await _context.PicturesStores.FindAsync(Convert.ToInt32(idPicture));
-            
-
-           
             if (picture != null)
             {
                 _context.PicturesStores.Remove(picture);
@@ -324,12 +313,9 @@ namespace ProblemSets.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadFile(ProblemSet joke, string idForAdmin)
         {
-
-
-            var kek = "dscs";
-            var files = HttpContext.Request.Form.Files;
-           
             
+            var files = HttpContext.Request.Form.Files;
+
             if (ModelState.IsValid)
             {
                 joke.ProblemTagWithSpace=string.Join(" ", joke.ProblemTag);
@@ -404,23 +390,18 @@ namespace ProblemSets.Controllers
         [HttpPost]
         public async Task<IActionResult> SendRate(int id)
         {
-            
-            var userRate = Convert.ToInt16(Request.Form["rate"][0]);
             var problem = await _context.ProblemSets.FindAsync(id);
             
-                _context.Add(new Rating {ProblemSetId = problem.Id, AppUserId = User.Claims.ToList()[0].Value, UserRating = userRate} );
-                await _context.SaveChangesAsync();  
-                
-             var kek = (double)_context.Ratings.Where(p => p.ProblemSetId == problem.Id).Sum(p => p.UserRating) /
-                      _context.Ratings.Count(p => p.ProblemSetId == problem.Id);
-             problem.AverageRate = kek;
-                
+            if (Request.Form["rate"].Count !=0 )
+            {
+                var userRate = Convert.ToInt16(Request.Form["rate"][0]);
+                _context.Add(new Rating {ProblemSetId = problem.Id, AppUserId = User.Claims.ToList()[0].Value, UserRating = userRate});
                 await _context.SaveChangesAsync();
-                
-                return RedirectToAction("Details", problem);
-                
+                problem.AverageRate = (double) _context.Ratings.Where(p => p.ProblemSetId == problem.Id).Sum(p => p.UserRating) /
+                                      _context.Ratings.Count(p => p.ProblemSetId == problem.Id);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Details", problem);
         }
-        
-    
     }
 }

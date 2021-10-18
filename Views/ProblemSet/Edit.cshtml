@@ -205,6 +205,7 @@ function getAnswers(){
 <script src="~/Dropzone/dropzone.min.js"></script>
 <script type="text/javascript">
         Dropzone.options.myDropzone= {
+            dictDefaultMessage : "@Localizer["Drop files here to upload"]",
             url: "/ProblemSet/EditFile",
             autoProcessQueue: false,
             uploadMultiple: true,
@@ -277,4 +278,8 @@ setTimeout(() => { window.location.replace("/ProblemSet");  }, 1000);
 } 
 </script>
 
-
+<style>
+.dz-default{
+color: #050505;
+}
+</style>
