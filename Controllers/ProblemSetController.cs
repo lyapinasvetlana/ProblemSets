@@ -87,6 +87,7 @@ namespace ProblemSets.Controllers
         public async Task<IActionResult> EditFile(int id, ProblemSet problemSet)
         {
             problemSet.ProblemTagWithSpace=string.Join(" ", problemSet.ProblemTag);
+            problemSet.CreationTime=DateTimeOffset.Now;
             _context.Update(problemSet);
             await _context.SaveChangesAsync();
             var files = HttpContext.Request.Form.Files;
@@ -113,7 +114,21 @@ namespace ProblemSets.Controllers
             ViewBag.Pictures=await _context.PicturesStores.Where(m => m.ProblemSetId == id).ToArrayAsync();
             var problemSet = await _context.ProblemSets.FindAsync(id);
             var solvedProblem = _context.SolvedProblems.FirstOrDefaultAsync(m => m.ProblemSetId == id && m.AppUserId == User.Claims.ToList()[0].Value).Result;
-            await SendSolution(solvedProblem, problemSet, problem);
+            if (solvedProblem!=null)
+            {
+                TempData.Add("Has Solution",$": {solvedProblem.UserAnswer}");
+            }
+            else if (problemSet.ProblemAnswer.Contains(problem.ProblemAnswer[0]))
+            {
+                _context.Add(new SolvedProblem {ProblemSetId = problem.Id, AppUserId = User.Claims.ToList()[0].Value, UserAnswer = problem.ProblemAnswer[0]} );
+                await _context.SaveChangesAsync();
+                ViewBag.Solution="Correct";
+            }
+            else
+            {
+                ViewBag.Solution = "Wrong";
+            }
+            
             return View("Details", problemSet);
         }
 
@@ -220,25 +235,6 @@ namespace ProblemSets.Controllers
             return new EmptyResult();
         }
         
-        public async Task<IActionResult> SendSolution(SolvedProblem solvedProblem , ProblemSet problemSet, ProblemSet problem)
-        {
-            if (solvedProblem!=null)
-            {
-                TempData.Add("Has Solution",$": {solvedProblem.UserAnswer}");
-            }
-            else if (problemSet.ProblemAnswer.Contains(problem.ProblemAnswer[0]))
-            {
-                _context.Add(new SolvedProblem {ProblemSetId = problem.Id, AppUserId = User.Claims.ToList()[0].Value, UserAnswer = problem.ProblemAnswer[0]} );
-                await _context.SaveChangesAsync();
-                ViewBag.Solution="Correct";
-            }
-            else
-            {
-                ViewBag.Solution = "Wrong";
-            }
-
-            return new EmptyResult();
-        }
         
         public IActionResult ChooseFilter(string sortOrder, ref IQueryable<ProblemSet> problemSets)
         {
