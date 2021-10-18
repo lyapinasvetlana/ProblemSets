@@ -5,20 +5,16 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-/*using WebAppEnd.IdentityPolicy;*/
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.Extensions.Options;
 using ProblemSets.ConfigDataBase;
 using ProblemSets.Models;
-using ProblemSets.ViewModels;
 
-/*using Microsoft.AspNetCore.Authorization;
-using WebAppEnd.CustomPolicy;*/
+
 
 namespace ProblemSets
 {
@@ -36,22 +32,14 @@ namespace ProblemSets
                 options.UseNpgsql(Config.SetConfig());
             });
             
-            
             services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
-
-           
             services.Configure<IdentityOptions>(opts =>
             {
                 opts.User.RequireUniqueEmail = false;
                 opts.User.AllowedUserNameCharacters = null;
-                opts.Password.RequiredLength = 8;
-                opts.Password.RequireNonAlphanumeric = true;
-                opts.Password.RequireLowercase = false;
-                opts.Password.RequireUppercase = true;
-                opts.Password.RequireDigit = true;
                 opts.Lockout.AllowedForNewUsers = true;
                 opts.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
-                opts.Lockout.MaxFailedAccessAttempts = 3;
+                opts.Lockout.MaxFailedAccessAttempts = 10;
             });
 
             services.AddAuthorization(opts => {
@@ -60,7 +48,6 @@ namespace ProblemSets
                     policy.RequireClaim("Coding-Skill", "ASP.NET Core MVC");
                 });
             });
-            
 
             services.AddAuthentication()
                 .AddGoogle(options =>
@@ -70,11 +57,11 @@ namespace ProblemSets
                     options.SignInScheme = IdentityConstants.ExternalScheme;
                 })
                 .AddGitHub(options =>
-            {
+                {
                 options.ClientId = Environment.GetEnvironmentVariable("IDGITHUB");
                 options.ClientSecret = Environment.GetEnvironmentVariable("SECRETGITHUB");
                 options.SignInScheme = IdentityConstants.ExternalScheme;
-            });
+                });
             
             services.Configure<RequestLocalizationOptions>(options =>
             {
@@ -88,9 +75,7 @@ namespace ProblemSets
                 options.SupportedUICultures = supportedCultures;
             });
             
-            services.AddControllersWithViews().AddDataAnnotationsLocalization() 
-                .AddViewLocalization();
-            
+            services.AddControllersWithViews().AddDataAnnotationsLocalization().AddViewLocalization();
             services.AddHttpContextAccessor();
         }
 

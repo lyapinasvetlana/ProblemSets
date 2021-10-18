@@ -39,7 +39,7 @@ namespace ProblemSets.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            ViewBag.TagsGrouped=  _context.ProblemSets.Select(l => l.ProblemTag).ToList().SelectMany(l => l).GroupBy(v => v);
+            ViewBag.TagsGrouped=_context.ProblemSets.Select(l => l.ProblemTag).ToList().SelectMany(l => l).GroupBy(v => v);
             return View(await _context.ProblemSets.ToListAsync());
         }
 
@@ -48,7 +48,7 @@ namespace ProblemSets.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+            return RedirectToAction("Index");
         }
         
 
