@@ -1,17 +1,14 @@
 @using Microsoft.AspNetCore.Mvc.Localization
-@model Login
 @inject IViewLocalizer Localizer
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/css-social-buttons/1.4.0/css/zocial.min.css"/>
 <div style="text-align: center">
 <form asp-action="Login" method="post">
-    <input type="hidden" asp-for="ReturnUrl" />
     <a class="zocial googleplus" asp-action="GoogleLogin">@Localizer["LoginGoogle"]</a>
 </form>
 
 <form asp-action="Login" method="post">
-    <input type="hidden" asp-for="ReturnUrl" />
     <a class="zocial github" asp-action="GitHubLogin">@Localizer["LoginGitHub"]</a>
 </form>
 </div>

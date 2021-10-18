@@ -22,11 +22,9 @@ namespace ProblemSets.Controllers
         
   
         [AllowAnonymous]
-        public IActionResult Login(string returnUrl)
+        public IActionResult Login()
         {
-            Login login = new Login();
-            login.ReturnUrl = returnUrl;
-            return View(login);
+            return View();
         }
         
         public async Task<IActionResult> Logout()
