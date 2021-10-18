@@ -33,7 +33,7 @@ namespace ProblemSets.Controllers
             userId = userId==null? User.Claims.ToList()[0].Value:userId;
             SetSortingOptions(sortOrder);
             var problemSets = _context.ProblemSets.Where(x => x.AppUserId == userId);
-            ChooseFilter(sortOrder, problemSets);
+            ChooseFilter(sortOrder, ref problemSets);
             ViewBag.ProblemCreated = _context.ProblemSets.Count(problem => problem.AppUserId == userId) ;
             ViewBag.ProblemSolved = _context.SolvedProblems.Count(problem => problem.AppUserId == userId);
             return View(problemSets.ToList());
@@ -240,7 +240,7 @@ namespace ProblemSets.Controllers
             return new EmptyResult();
         }
         
-        public IActionResult ChooseFilter(string sortOrder, IQueryable<ProblemSet> problemSets)
+        public IActionResult ChooseFilter(string sortOrder, ref IQueryable<ProblemSet> problemSets)
         {
             switch (sortOrder)
             {
