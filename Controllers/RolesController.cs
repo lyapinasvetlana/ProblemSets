@@ -11,8 +11,7 @@ namespace ProblemSets.Controllers
 {
     public class RolesController : Controller
     {
-        public const string SiteAdmin = "Admin";
-        public const string id = "3ec51dc1-6dea-4ab5-add9-eeebf25ef1c3";
+        
         RoleManager<IdentityRole> _roleManager;
         UserManager<AppUser> _userManager;
         

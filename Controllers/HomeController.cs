@@ -64,6 +64,7 @@ namespace ProblemSets.Controllers
             return View(npgsql);
         }
         
+        [AllowAnonymous]
         public async Task<IActionResult> SetTheme(string theme, string path)
         {
             
@@ -74,6 +75,7 @@ namespace ProblemSets.Controllers
             return Redirect(path);
         }
         
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult SetLanguage(string culture, string returnUrl)
         {

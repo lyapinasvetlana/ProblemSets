@@ -39,6 +39,7 @@ namespace ProblemSets.Controllers
             return View(problemSets.ToList());
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (User != null && User.Identity.IsAuthenticated)

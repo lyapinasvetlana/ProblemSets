@@ -23,8 +23,6 @@ namespace ProblemSets.Models
             modelBuilder.Entity<ProblemSet>()
                 .HasIndex(b => new {  b.Theme, b.ProblemQuestion, b.ProblemTagWithSpace, b.Name})
                 .IsTsVectorExpressionIndex("english");
-
-           
         }
     }
 }
