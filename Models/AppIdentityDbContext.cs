@@ -11,7 +11,6 @@ namespace ProblemSets.Models
         public DbSet<Rating> Ratings { get; set; }
         public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options) : base(options)
         {
-            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
         

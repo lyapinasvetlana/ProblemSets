@@ -44,7 +44,7 @@ namespace ProblemSets.Controllers
         [AllowAnonymous]
         public IActionResult GoogleLogin()
         {
-            string redirectUrl = Url.Action("GoogleResponse", "Account");
+            string redirectUrl = Url.Action("NetWorkResponse", "Account");
             var properties = signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl);
             return new ChallengeResult("Google", properties);
         }
@@ -52,42 +52,47 @@ namespace ProblemSets.Controllers
         [AllowAnonymous]
         public IActionResult GitHubLogin()
         {
-            string redirectUrl = Url.Action("GoogleResponse", "Account");
+            string redirectUrl = Url.Action("NetWorkResponse", "Account");
             var properties = signInManager.ConfigureExternalAuthenticationProperties("GitHub", redirectUrl);
             return new ChallengeResult("GitHub", properties);
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> GoogleResponse()
+        public async Task<IActionResult> NetWorkResponse()
         {
             ExternalLoginInfo info = await signInManager.GetExternalLoginInfoAsync();
             if (info == null)
                 return RedirectToAction(nameof(Login));
 
             var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
-            string[] userInfo = { info.Principal.FindFirst(ClaimTypes.Name).Value, info.LoginProvider};
+
             if (result.Succeeded)
                 return RedirectToAction("Index", "Home");
             else
             {
-                AppUser user = new AppUser
-                {
-                    UserName = info.Principal.FindFirst(ClaimTypes.Name).Value,
-                    NameSocialMedia = info.LoginProvider
-                };
-
-                IdentityResult identResult = await userManager.CreateAsync(user);
-                if (identResult.Succeeded)
-                {
-                    identResult = await userManager.AddLoginAsync(user, info);
-                    if (identResult.Succeeded)
-                    {
-                        await signInManager.SignInAsync(user, false);
-                        return RedirectToAction("Index", "Home");
-                    }
-                }
+                await RegisterNewUser(info);
                 return AccessDenied();
             }
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> RegisterNewUser(ExternalLoginInfo info)
+        {
+            AppUser user = new AppUser
+            {
+                UserName = info.Principal.FindFirst(ClaimTypes.Name)?.Value,
+                NameSocialMedia = info.LoginProvider
+            };
+
+            IdentityResult identResult = await userManager.CreateAsync(user);
+            if (identResult.Succeeded)
+            {
+                await userManager.AddLoginAsync(user, info);
+                await signInManager.SignInAsync(user, false);
+                return RedirectToAction("Index", "Home");
+            }
+
+            return new EmptyResult();
         }
         
     }

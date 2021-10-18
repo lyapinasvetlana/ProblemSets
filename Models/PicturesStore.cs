@@ -10,8 +10,6 @@ namespace ProblemSets.Models
        
         [Key]
         public int PictureId { get; set; }
-        /*[ForeignKey("ProblemSetId")]*/
-        //public int ProblemSetId { get; set; }
         public string PictureName { get; set; }
         public DateTime CreatedOn { get; set; }
         public string PicturesType { get; set; }
